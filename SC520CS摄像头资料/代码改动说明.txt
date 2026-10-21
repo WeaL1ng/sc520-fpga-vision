@@ -1,0 +1,3 @@
+已将 SC520CS 的 Lab1、Lab2、Lab3 工程统一更新为原厂 1280×720@60fps HD 模式配置  
+并在Lab1工程中额外保留了2560×1920@30fps  模式的寄存器表如下：
+（"lab_ex1_mipi_hdmi_SC520\lab_ex1_mipi_hdmi\user_source\hdl_source\uics520_cfg\uics520reg_full_2560x1920_30.v"）

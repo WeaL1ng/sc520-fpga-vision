@@ -1,0 +1,194 @@
+// ============================================================================
+//  isp_top.v  --  lab_ex4_all_features 版本
+// ----------------------------------------------------------------------------
+//  与 lab1 版的唯一区别：新增 `I_edge_en` 端口，并在
+//  `data_96bit_to_128bit` 的**输入端**插入一个 96-bit 四信号整体 mux。
+//
+//  改动依据：doc/arch/connection_matrix.md §2.2 / §6
+//
+//  重要约束（务必遵守，否则会引入难查的问题）
+//  ---------------------------------------------------------------
+//  1) **tready 链保持与 lab2 逐字符一致**：
+//         assign awb_O_tready  = edge_O_tready;
+//         assign edge_O_tready = O_tready;
+//     顶层 `O_tready` 是既有遗留（声明为 input、接一根无驱动 wire），
+//     `I_tready` 悬空。**本轮刻意不改**（见 risks.md R-02 / B-02）。
+//
+//  2) **mux 必须四条信号整体同选**，禁止逐位混选：
+//         tdata / tvalid / tlast / tuser 必须来自同一个源，
+//     否则 data_96bit_to_128bit 会拿到"数据属于 A、valid 属于 B"的错配。
+//
+//  3) **edge_detect_96 始终接收数据（输出侧旁路，不做输入侧旁路）**：
+//     它内部有 x_grp / y_pos 计数与两块 16bit×320 行缓存。
+//     若旁路时停止喂数据，解除旁路瞬间窗口内容与当前像素不对应，画面会撕裂；
+//     若改成旁路时复位，会触发 edge_detect_96.v:110-112 注释警告的问题
+//     ——**复位循环会让 10 Kbit 行缓存被综合成 slice 寄存器**，资源暴涨。
+//     代价：Sobel 逻辑持续消耗功耗。这是刻意权衡（见 connection_matrix.md §2.2）。
+//
+//  4) 保留 lab1 原有的端口方向写法（`input O_tready` / `output I_tready`
+//     命名与方向相反）——这是既有遗留，改了会牵动顶层连接。
+// ============================================================================
+module isp_top (
+    input 			axi4s_video_aclk,
+    input 			I_rst_n			,
+    input 			I_tlast			,
+    input 			I_tuser			,
+    input [39:0] 	I_tdata			,
+    input 			I_tvalid		,
+    input [9:0] 	I_tdest			,
+    input 			I_edge_en		,   // ★ 新增：1=边缘检测, 0=直通 AWB
+    input 			O_tready		,
+    output [127:0] 	O_tdata			,
+    output 			O_tlast			,
+    output 			O_tuser			,
+    output 			O_tvalid		,
+    output 			I_tready
+);
+
+  wire         m_aixs_tvalid;  //synthesis keep
+  wire [127:0] m_aixs_tdata;   //synthesis keep
+  wire         m_aixs_tuser;   //synthesis keep
+  wire         m_aixs_tlast;   //synthesis keep
+  wire         m_aixs_tready;  //synthesis keep
+
+  wire [ 95:0] m_aixs_tdata_96;  //synthesis keep
+
+  wire         awb_O_tlast;    //synthesis keep
+  wire         awb_O_tuser;    //synthesis keep
+  wire [ 95:0] awb_O_tdata;    //synthesis keep
+  wire         awb_O_tvalid;   //synthesis keep
+  wire         awb_O_tready;   //synthesis keep
+
+  // ---- 新增：edge_detect_96 的输出 ----
+  wire         edge_O_tlast;   //synthesis keep
+  wire         edge_O_tuser;   //synthesis keep
+  wire [ 95:0] edge_O_tdata;   //synthesis keep
+  wire         edge_O_tvalid;  //synthesis keep
+  wire         edge_O_tready;  //synthesis keep
+
+  // ---- 新增：送入 data_96bit_to_128bit 的整体选中结果 ----
+  wire         sel_O_tlast;
+  wire         sel_O_tuser;
+  wire [ 95:0] sel_O_tdata;
+  wire         sel_O_tvalid;
+
+  wire         awb_O_tuser_128;  //synthesis keep
+  wire         awb_O_tvalid_128; //synthesis keep
+  wire [127:0] awb_O_tdata_128;  //synthesis keep
+
+  // ---------------------------------------------------------------------------
+  // tready 链：与 lab2 逐字符一致，保持原样
+  // ---------------------------------------------------------------------------
+  assign awb_O_tready  = edge_O_tready;
+  assign edge_O_tready = O_tready;
+
+  assign O_tdata  = awb_O_tdata_128;
+  assign O_tlast  = awb_O_tlast    ;
+  assign O_tuser  = awb_O_tuser_128    ;
+  assign O_tvalid = awb_O_tvalid_128   ;
+
+  //assign m_aixs_tready = O_tready;
+  //assign O_tdata  = m_aixs_tdata;
+  //assign O_tlast  = m_aixs_tlast    ;
+  //assign O_tuser  = m_aixs_tuser    ;
+  //assign O_tvalid = m_aixs_tvalid   ;
+
+  // ---------------------------------------------------------------------------
+  // ★ 新增：输出侧旁路 mux（四条信号整体同选）
+  // ---------------------------------------------------------------------------
+  assign sel_O_tdata  = I_edge_en ? edge_O_tdata  : awb_O_tdata ;
+  assign sel_O_tvalid = I_edge_en ? edge_O_tvalid : awb_O_tvalid;
+  assign sel_O_tlast  = I_edge_en ? edge_O_tlast  : awb_O_tlast ;
+  assign sel_O_tuser  = I_edge_en ? edge_O_tuser  : awb_O_tuser ;
+
+
+demosaic #(
+    .IMG_HEIGHT          (720 ), // 图像高度
+    .IMG_WIDTH           (1280), // 图像宽度
+    .data_complete_delay (50  ),
+    .BAYER_MODE          ("BGGR")
+)
+u_demosaic
+(
+    .I_clk   			(axi4s_video_aclk)	,   // 时钟信号
+    .I_rst_n 			(I_rst_n)	,   // 复位信号，低有效
+    .axi4s_video_tdata 	(I_tdata)	,  // AXI4-Stream视频数据
+    .axi4s_video_tdest 	(I_tdest)	,
+    .axi4s_video_tlast 	(I_tlast)	,  // 行结束信号
+    .axi4s_video_tvalid	(I_tvalid)	,  // 数据有效信号
+    .axi4s_video_tuser 	(I_tuser)	,  // 帧开始信号
+    .axi4s_video_tready	(I_tready)	,  // 从模块准备好接受数据
+    .O_tlast  			(m_aixs_tlast)	,  // 输出行结束信号
+    .O_tuser  			(m_aixs_tuser)	,  // 输出帧开始信号
+    .O_tdata  			(m_aixs_tdata)	,  // 输出数据
+    .O_tvalid 			(m_aixs_tvalid)	,  // 输出数据有效信号
+    .O_tready   		(m_aixs_tready)	   // 输出数据准备好信号
+);
+
+data128_96 u_data128_96 (
+    .I_tdata(m_aixs_tdata),
+    .O_tdata(m_aixs_tdata_96)
+);
+
+awb #(
+    .IMG_HEIGHT(720 ),
+    .IMG_WIDTH (1280)
+) u_awb (
+    .I_clk   (axi4s_video_aclk),
+    .I_rst_n (I_rst_n),
+    .I_tlast (m_aixs_tlast),
+    .I_tuser (m_aixs_tuser),
+    .I_tdata (m_aixs_tdata_96),
+    .I_tvalid(m_aixs_tvalid),
+    .I_tready(m_aixs_tready),
+    .O_tlast (awb_O_tlast ),
+    .O_tuser (awb_O_tuser ),
+    .O_tdata (awb_O_tdata ),
+    .O_tvalid(awb_O_tvalid),
+    .O_tready(awb_O_tready)
+);
+
+// ---------------------------------------------------------------------------
+// ★ 新增：Sobel 边缘检测（**始终运行**，见文件头第 3 条说明）
+//    输入接 awb 输出（与 lab2 一致），输出进 mux 的 true 侧
+// ---------------------------------------------------------------------------
+edge_detect_96 #(
+    .IMG_WIDTH (1280),
+    .IMG_HEIGHT(720 ),
+    .EDGE_TH   (11'd80)
+) u_edge_detect_96 (
+    .I_clk   (axi4s_video_aclk),
+    .I_rst_n (I_rst_n),
+    .I_tlast (awb_O_tlast),
+    .I_tuser (awb_O_tuser),
+    .I_tdata (awb_O_tdata),
+    .I_tvalid(awb_O_tvalid),
+    .I_tready(awb_O_tready),
+    .O_tlast (edge_O_tlast),
+    .O_tuser (edge_O_tuser),
+    .O_tdata (edge_O_tdata),
+    .O_tvalid(edge_O_tvalid),
+    .O_tready(edge_O_tready)
+);
+
+    data_96bit_to_128bit u_data_96bit_to_128bit(
+        .I_clk              ( axi4s_video_aclk  ),
+        .I_rst_n            ( I_rst_n           ),
+
+        .I_96b_frame_start  ( sel_O_tuser	    ),   // ★ 由 awb_O_tuser 改为 mux 输出
+        .I_96b_valid        ( sel_O_tvalid 		),   // ★ 由 awb_O_tvalid 改为 mux 输出
+        .I_96b_data         ( sel_O_tdata		),   // ★ 由 awb_O_tdata 改为 mux 输出
+
+        .O_128b_frame_start ( awb_O_tuser_128  	),
+        .O_128b_valid       ( awb_O_tvalid_128 	),
+        .O_128b_data        ( awb_O_tdata_128  	)
+    );
+
+
+
+//data96_128 u_data96_128 (
+//    .I_tdata(awb_O_tdata),
+//    .O_tdata(awb_O_tdata_128)
+//);
+
+endmodule

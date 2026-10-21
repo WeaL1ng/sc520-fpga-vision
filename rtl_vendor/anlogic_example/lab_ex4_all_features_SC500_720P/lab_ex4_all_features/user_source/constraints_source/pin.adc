@@ -1,0 +1,66 @@
+
+set_pin_assignment	{ I_sys_clk }			{ LOCATION = C4; IOSTANDARD  = LVCMOS33; PULLTYPE = PULLUP; }
+set_pin_assignment	{ I_rst_n }				{ LOCATION = R10; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; }
+
+set_pin_assignment	{ O_cam_scl }		{ LOCATION = K3; IOSTANDARD  = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = PULLUP; }
+set_pin_assignment	{ IO_cam_sda }		{ LOCATION = J3; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = PULLUP; }
+set_pin_assignment	{ O_cam_24m }	{ LOCATION = L3; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = PULLUP; }
+set_pin_assignment	{ O_cam_rst }		{ LOCATION = L2; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = PULLUP; }
+
+# ---------------------------------------------------------------------------
+# FIX 2026-09-18 : I_button moved from DC3 expansion header to on-board keys.
+#
+#   OLD (copied from lab1) : I_button[0]=N2, I_button[1]=J14
+#   PROBLEM : per HX1P35B pin-assignment sheet, N2 = GPIOA_19 and J14 = GPIOB_12
+#             are on the two 40-pin DC3 expansion headers.  No physical key is
+#             wired there.  Left floating they read constant 1 (released) via
+#             PULLUP, so a short press can never occur, mode[1:0] stays 2'b00,
+#             and the new edge-detect / OSD demo functions are dead on board.
+#
+#   CORRECT (same sheet, section "4 groups of keys") :
+#             KEY1 = D5   KEY2 = A9   KEY3 = B9   KEY4 = C7
+#   This design needs 2 keys, so KEY1 / KEY2 are used.
+#   Active low: pressed = 0, released = 1 (matches key_mode_ctrl reset 2'b11).
+#
+#   Evidence: doc/analysis/lab4-arch-review-2026-09-18.md (section 2)
+#             doc/analysis/_extract/DX_HX1P35B<pin sheet>.txt lines 131-136
+#
+#   NOTE: keep this file pure ASCII.  TD's Tcl shell is not Unicode-safe
+#         (same class of issue as the non-ASCII install-path failure).
+# ---------------------------------------------------------------------------
+set_pin_assignment	{ I_button[0] }			{ LOCATION = D5;  IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = PULLUP; }
+set_pin_assignment	{ I_button[1] }			{ LOCATION = A9;  IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = PULLUP; }
+# spare keys if more are needed later : KEY3 = B9, KEY4 = C7
+
+set_pin_assignment	{ O_screen_pwm } 		{ LOCATION = R11; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = PULLDOWN; }
+set_pin_assignment	{ O_tmds_ch0_p }		{ LOCATION = G16; IOSTANDARD = TMDS33; PULLTYPE = NONE; }
+set_pin_assignment	{ O_tmds_ch1_p }		{ LOCATION = F17; IOSTANDARD = TMDS33; PULLTYPE = NONE; }
+set_pin_assignment	{ O_tmds_ch2_p }		{ LOCATION = H14; IOSTANDARD = TMDS33; PULLTYPE = NONE; }
+set_pin_assignment	{ O_tmds_clk_p }		{ LOCATION = C17; IOSTANDARD = TMDS33; PULLTYPE = NONE; }
+
+# ---------------------------------------------------------------------------
+# 2026-09-22 : EXT(3) external control -- on-board LEDs + buzzer.
+#
+#   Source : doc/analysis/_extract/DX_HX1P35B<pin sheet>.txt
+#              section 2   "4 groups of independent LEDs": LED1..LED4
+#              section 11  "buzzer": BUZZER
+#   Cross-check that this sheet is the right one for our board: its key
+#   section gives KEY1=D5 / KEY2=A9, which is exactly what I_button uses
+#   above (and what made the mode-switch bug fix work).
+#
+#   O_led[0] = LED1 : target detected
+#   O_led[1] = LED2 : shape = BAR
+#   O_led[2] = LED3 : shape = BLOCK
+#   O_led[3] = LED4 : AE auto mode active
+#   O_buzzer        : 0.15 s on / 0.35 s off beep while a target is detected
+#                     NOTE: on-board switch SW5 enables the buzzer; it must be
+#                     turned ON or the beep is inaudible (looks like "not done").
+#
+#   All four LED pins were free (not used by camera / HDMI / DDR / MIPI / keys).
+# ---------------------------------------------------------------------------
+set_pin_assignment	{ O_led[0] }	{ LOCATION = D10; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }
+set_pin_assignment	{ O_led[1] }	{ LOCATION = E10; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }
+set_pin_assignment	{ O_led[2] }	{ LOCATION = C6;  IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }
+set_pin_assignment	{ O_led[3] }	{ LOCATION = D6;  IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }
+set_pin_assignment	{ O_buzzer }	{ LOCATION = C12; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }
+

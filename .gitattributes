@@ -1,0 +1,23 @@
+# 文本文件统一 LF，二进制文件显式标记，避免 git 把位流/PDF 当文本处理
+* text=auto
+
+*.bit   binary
+*.db    binary
+*.zip   binary
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.docx  binary
+*.xlsx  binary
+*.xls   binary
+
+*.v      text
+*.sv     text
+*.adc    text
+*.sdc    text
+*.tcl    text
+*.py     text
+*.ps1    text
+*.md     text
+*.ini    text

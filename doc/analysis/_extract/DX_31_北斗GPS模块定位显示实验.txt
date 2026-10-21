@@ -1,0 +1,192 @@
+########## FILE: 31_北斗GPS模块定位显示实验.docx ##########
+GPS模块定位显示实验
+一、实验任务
+基于FPGA开发板，搭配ATK-MO1218北斗GPS双模定位模块，通过UART串口接收模块输出的NMEA-0183协议定位报文，完成GGA报文的识别与解析，提取UTC时间、经纬度、海拔等核心定位信息，最终通过VGA接口在显示器上实现定位数据的实时字符显示。掌握UART串口通信的FPGA实现方法、NMEA-0183定位协议的解析逻辑、VGA字符显示驱动设计，理解北斗GPS双模定位的工作原理与FPGA全链路数据处理流程。
+二、实验原理
+1. 北斗GPS双模模块工作原理
+本实验选用ATK-MO1218北斗GPS双模定位模块，内置S1216F8-BD定位芯片，支持北斗BDS与GPS双系统联合定位，通过UART串行接口输出标准NMEA-0183格式的定位报文，出厂默认串口波特率为115200bps。
+模块核心引脚功能如下：
+[[IMAGE]]
+[[IMAGE]]
+TXD/RXD：串口数据收发引脚，用于输出定位报文、接收模块配置指令；
+PPS：秒脉冲输出引脚，同时连接板载状态指示灯，未定位时常亮，定位成功后以1秒为周期闪烁（100ms灭、900ms亮）；
+VCC/GND：模块供电引脚，支持3.3V/5V双电压供电。
+图1 ATK-MO1218北斗GPS模块实物与引脚定义图
+[[IMAGE]]
+[[IMAGE]]
+2. UART串行通信协议原理
+UART为异步串行通信协议，本实验采用1位起始位、8位数据位、1位停止位、无校验位的帧格式，波特率配置为115200bps。
+空闲状态：串口数据线保持高电平；
+起始位：发送端将数据线拉低1个波特率周期，标识一帧数据的开始；
+数据位：依次发送8位有效数据，低位在前、高位在后；
+停止位：发送端将数据线拉高1个波特率周期，标识一帧数据的结束。
+基于FPGA 50MHz系统时钟，1位数据的传输周期为1/115200 s，对应系统时钟计数个数为：(1s×10⁹ns/115200bit)/20ns ≈ 434个时钟周期，因此在数据位的中间时刻（计数到217）采集数据，保证采样的准确性。
+[[IMAGE]]
+3. NMEA-0183 GGA报文协议
+本实验核心解析GGA格式报文，该报文包含了定位所需的核心信息，标准格式如下：
+$xxGGA,time,lat,NS,lon,EW,quality,numSV,HDOP,alt,altUnit,sep,sepUnit,diffAge,diffStation*cs<CR><LF>
+各字段定义：
+--- TABLE ---
+字段序号 | 字段含义 | 格式说明
+1 | 报文头 | 固定为BDGGA（北斗），统一识别xxGGA
+2 | UTC时间 | 格式为hhmmss.ss，时分秒格式
+3 | 纬度 | 格式为ddmm.mmmmm，度分格式
+4 | 南北纬标识 | N=北纬，S=南纬
+5 | 经度 | 格式为dddmm.mmmmm，度分格式
+6 | 东西经标识 | E=东经，W=西经
+7 | 定位状态 | 0=未定位，1=单点定位
+8 | 参与定位的卫星数 | 0~12
+9 | 水平精度因子 | HDOP值
+10 | 海拔高度 | 单位为米，保留1位小数
+11 | 海拔单位 | 固定为M（米）
+--- /TABLE ---
+4. VGA字符显示原理
+本实验采用640×480@60Hz的VGA显示标准，单个字符采用32×32点阵设计，全屏可显示20列×15行字符。提前将数字、字母、符号的32×32点阵RGB565色彩数据存储到FPGA片内ROM中，根据屏幕像素坐标计算出当前字符位置与点阵偏移地址，从ROM中读取对应像素数据，输出至VGA接口，实现定位信息的字符化显示。
+三、程序设计
+1. 设计思路
+采用分层模块化设计，将全流程拆分为5个独立功能模块，模块间通过标准化接口连接，逻辑清晰、可扩展性强：
+[[IMAGE]]
+PLL时钟模块：输入50MHz系统时钟，输出两路同步时钟，50MHz用于UART串口接收与报文解析，25MHz用于VGA显示驱动与字符生成，满足不同模块的时钟需求。
+UART串口接收模块：实现115200bps波特率的UART串行数据接收，完成串行数据到并行8位数据的转换，输出字节接收完成标志与接收到的字节数据。
+GGA报文解析模块：识别串口输入的NMEA报文，筛选出GGA格式报文，按逗号分隔字段，逐位解析出UTC时间、经纬度、海拔、南北纬/东西经标识等信息，输出标准化的数值信号。
+字符显示模块：根据解析后的定位信息，结合VGA像素坐标，计算出当前显示字符的ROM地址，输出对应像素的RGB色彩数据。
+VGA驱动模块：生成640×480@60Hz标准VGA时序，输出行同步、场同步信号与像素数据请求信号，驱动VGA显示器正常显示。
+2. 模块端口定义
+（1）顶层模块 gps_display_top
+--- TABLE ---
+端口名 | 方向 | 位宽 | 功能说明
+CLK_50 | 输入 | 1bit | FPGA板载50MHz系统时钟输入
+reset_n | 输入 | 1bit | 系统复位信号，低电平有效
+UART_RXD | 输入 | 1bit | GPS模块串口数据输入引脚
+video_hs | 输出 | 1bit | VGA行同步信号
+video_vs | 输出 | 1bit | VGA场同步信号
+video_rgb | 输出 | 11:0 | VGA RGB444色彩数据输出
+--- /TABLE ---
+（2）UART串口接收模块 uart_rx
+--- TABLE ---
+端口名 | 方向 | 位宽 | 功能说明
+clk | 输入 | 1bit | 50MHz模块工作时钟
+rst_n | 输入 | 1bit | 系统复位，低电平有效
+uart_rxd | 输入 | 1bit | UART串行数据输入
+uart_rx_done | 输出 | 1bit | 单字节接收完成标志，高电平有效
+uart_rx_data | 输出 | 7:0 | 接收到的8位并行字节数据
+--- /TABLE ---
+（3）GGA报文解析模块 GGA
+--- TABLE ---
+端口名 | 方向 | 位宽 | 功能说明
+rx_done_toUart | 输入 | 1bit | UART单字节接收完成标志
+rddat_toUart | 输入 | 7:0 | UART接收到的8位字节数据
+rx_done | 输出 | 1bit | 单帧GGA报文解析完成标志
+hh | 输出 | 4:0 | UTC时间-时，0~24
+mm | 输出 | 5:0 | UTC时间-分，0~59
+ss | 输出 | 5:0 | UTC时间-秒，0~59
+ss2 | 输出 | 6:0 | UTC时间-秒小数部分，0~99
+lat | 输出 | 6:0 | 纬度-度，0~90
+lat2 | 输出 | 5:0 | 纬度-分，0~59
+lat3 | 输出 | 16:0 | 纬度-分小数部分，0~99999
+NS | 输出 | 1bit | 南北纬标识，1=北纬，0=南纬
+lon | 输出 | 7:0 | 经度-度，0~180
+lon2 | 输出 | 5:0 | 经度-分，0~59
+lon3 | 输出 | 16:0 | 经度-分小数部分，0~99999
+EW | 输出 | 1bit | 东西经标识，1=东经，0=西经
+alt | 输出 | 13:0 | 海拔-米整数部分
+alt2 | 输出 | 3:0 | 海拔-米小数部分，0~9
+--- /TABLE ---
+（4）字符显示模块 char_display
+--- TABLE ---
+端口名 | 方向 | 位宽 | 功能说明
+clk | 输入 | 1bit | 25MHz VGA工作时钟
+rst_n | 输入 | 1bit | 系统复位，低电平有效
+pixel_xpos | 输入 | 10:0 | 当前像素点横坐标
+pixel_ypos | 输入 | 10:0 | 当前像素点纵坐标
+data_req | 输入 | 1bit | 像素数据有效请求信号
+hh/mm/ss/ss2 | 输入 | - | 解析后的UTC时间数据
+lat/lat2/lat3/NS | 输入 | - | 解析后的纬度数据
+lon/lon2/lon3/EW | 输入 | - | 解析后的经度数据
+alt/alt2 | 输入 | - | 解析后的海拔数据
+video_data | 输出 | 11:0 | RGB444像素色彩数据
+--- /TABLE ---
+3. 核心Verilog代码
+（1）字符转数字辅助模块 Char2Num.v
+--- TABLE ---
+Plaintext // ASCII字符转数字模块，用于NMEA报文数字解析 module Char2Num( input [7:0] Char, output reg [3:0] Num, output reg isNum ); always @(*) begin if(Char >= 8'h30 && Char <= 8'h39) begin Num = Char - 8'h30; isNum = 1'b1; end else begin Num = 4'd0; isNum = 1'b0; end end endmodule
+--- /TABLE ---
+（2）UART串口接收模块 uart_rx.v
+--- TABLE ---
+Plaintext module uart_rx( input clk , //系统时钟50MHz input rst_n , //系统复位，低有效 input uart_rxd , //UART接收端口 output reg uart_rx_done, //UART接收完成信号 output reg [7:0] uart_rx_data //UART接收到的数据 ); //parameter define parameter CLK_FREQ = 50000000; //系统时钟频率 parameter UART_BPS = 115200 ; //串口波特率 localparam BAUD_CNT_MAX = CLK_FREQ/UART_BPS; //单个bit对应的时钟计数最大值 //reg define reg uart_rxd_d0; reg uart_rxd_d1; reg uart_rxd_d2; reg rx_flag ; //接收过程标志信号 reg [3:0] rx_cnt ; //接收数据计数器 reg [15:0] baud_cnt ; //波特率计数器 reg [7:0] rx_data_t ; //接收数据寄存器 //wire define wire start_en; //***************************************************** //** main code //***************************************************** //捕获接收端口下降沿(起始位)，得到一个时钟周期的脉冲信号 assign start_en = uart_rxd_d2 & (~uart_rxd_d1) & (~rx_flag); //针对异步信号的同步处理，消除亚稳态 always @(posedge clk or negedge rst_n) begin if(!rst_n) begin uart_rxd_d0 <= 1'b0; uart_rxd_d1 <= 1'b0; uart_rxd_d2 <= 1'b0; end else begin uart_rxd_d0 <= uart_rxd; uart_rxd_d1 <= uart_rxd_d0; uart_rxd_d2 <= uart_rxd_d1; end end //接收标志信号控制 always @(posedge clk or negedge rst_n) begin if(!rst_n) rx_flag <= 1'b0; else if(start_en) //检测到起始位 rx_flag <= 1'b1; //进入接收过程，标志信号拉高 //在停止位一半的时候，接收过程结束，标志信号拉低 else if((rx_cnt == 4'd9) && (baud_cnt == BAUD_CNT_MAX/2 - 1'b1)) rx_flag <= 1'b0; else rx_flag <= rx_flag; end //波特率计数器赋值 always @(posedge clk or negedge rst_n) begin if(!rst_n) baud_cnt <= 16'd0; else if(rx_flag) begin //处于接收过程时，波特率计数器循环计数 if(baud_cnt < BAUD_CNT_MAX - 1'b1) baud_cnt <= baud_cnt + 16'b1; else baud_cnt <= 16'd0; //计数达到一个波特率周期后清零 end else baud_cnt <= 16'd0; //接收过程结束时计数器清零 end //接收数据计数器赋值 always @(posedge clk or negedge rst_n) begin if(!rst_n) rx_cnt <= 4'd0; else if(rx_flag) begin //处于接收过程时rx_cnt才进行计数 if(baud_cnt == BAUD_CNT_MAX - 1'b1) //当波特率计数器计数到一个波特率周期时 rx_cnt <= rx_cnt + 1'b1; //接收数据计数器加1 else rx_cnt <= rx_cnt; end else rx_cnt <= 4'd0; //接收过程结束时计数器清零 end //根据rx_cnt在数据位中间时刻寄存串口数据 always @(posedge clk or negedge rst_n) begin if(!rst_n) rx_data_t <= 8'b0; else if(rx_flag) begin //系统处于接收过程时 if(baud_cnt == BAUD_CNT_MAX/2 - 1'b1) begin //判断baud_cnt是否计数到数据位的中间 case(rx_cnt) 4'd1 : rx_data_t[0] <= uart_rxd_d2; //寄存数据最低位 4'd2 : rx_data_t[1] <= uart_rxd_d2; 4'd3 : rx_data_t[2] <= uart_rxd_d2; 4'd4 : rx_data_t[3] <= uart_rxd_d2; 4'd5 : rx_data_t[4] <= uart_rxd_d2; 4'd6 : rx_data_t[5] <= uart_rxd_d2; 4'd7 : rx_data_t[6] <= uart_rxd_d2; 4'd8 : rx_data_t[7] <= uart_rxd_d2; //寄存数据最高位 default : ; endcase end else rx_data_t <= rx_data_t; end else rx_data_t <= 8'b0; end //给接收完成信号和接收到的数据赋值 always @(posedge clk or negedge rst_n) begin if(!rst_n) begin uart_rx_done <= 1'b0; uart_rx_data <= 8'b0; end //当接收数据计数器计数到停止位，且baud_cnt计数到停止位的中间时 else if(rx_cnt == 4'd9 && baud_cnt == BAUD_CNT_MAX/2 - 1'b1) begin uart_rx_done <= 1'b1 ; //拉高接收完成信号 uart_rx_data <= rx_data_t; //对UART接收到的数据进行赋值 end else begin uart_rx_done <= 1'b0; uart_rx_data <= uart_rx_data; end end endmodule
+--- /TABLE ---
+（3）GGA报文解析模块 GGA.v
+--- TABLE ---
+Plaintext //GGA报文解析模块，解析NMEA-0183协议中的GGA定位报文 module GGA( input rx_done_toUart, //UART字节接收完成标志 input [7:0] rddat_toUart, //UART接收到的字节数据 output reg rx_done, //单帧GGA报文解析完成标志 output reg [4:0] hh, //UTC时间-时 output reg [5:0] mm, //UTC时间-分 output reg [5:0] ss, //UTC时间-秒 output reg [6:0] ss2, //UTC时间-秒小数部分 output reg [6:0] lat, //纬度-度 output reg [5:0] lat2, //纬度-分 output reg [16:0] lat3, //纬度-分小数部分 output reg NS, //南北纬标识 output reg [7:0] lon, //经度-度 output reg [5:0] lon2, //经度-分 output reg [16:0] lon3, //经度-分小数部分 output reg EW, //东西经标识 output reg [13:0] alt, //海拔-整数部分 output reg [3:0] alt2 //海拔-小数部分 ); //xxGGA格式: $xxGGA,time,lat,NS,lon,EW,quality,numSV,HDOP,alt,altUnit,sep,sepUnit,diffAge,diffStation*cs<CR><LF> //time格式: hhmmss.ss //lat格式: ddmm.mmmmm //lon格式: dddmm.mmmmm //alt格式: numeric，一位小数 reg [4:0] cntField; //当前读取第几个域，以','分隔 reg [3:0] cntChar; //当前读取域中的第几个字符 reg start = 1'b0; //NMEA报文的接收标志，以$开始，到\n结束 reg [7:0] charBuffer; reg [1:0] corrNum = 2'd0; //比对是否为xxGGA，corrNum=3时表示GGA报文识别成功 reg afterDot; //判断是否是"."后面的数字，解析海拔时用到 //将字符0~9转换为数字0~9 wire [3:0] num; wire isnum; Char2Num Char2Num_inst( .Char(charBuffer), .Num(num), .isNum(isnum) ); always @(posedge rx_done_toUart) begin charBuffer <= rddat_toUart; //-----------------------接收NMEA报文数据----------------------------- if(rddat_toUart == "$") begin //接收到$，标志NMEA数据起始 start <= 1'b1; cntField <= 5'd0; cntChar <= 4'd0; corrNum <= 2'd0; rx_done <= 1'b0; end else if(start) begin if(rddat_toUart == "\n") begin //收到\n，标志NMEA报文结束 start <= 1'b0; rx_done <= 1'b1; end else if(rddat_toUart == "," || rddat_toUart == "*") begin //域分隔符 cntField <= cntField + 1'b1; cntChar <= 4'd0; end else begin //收到其他有效字符 cntChar <= cntChar + 1'b1; end end else begin start <= 1'b0; cntField <= 5'd0; cntChar <= 4'd0; corrNum <= 2'd0; end //------------------------判断是否为xxGGA报文---------------------------- if(cntField == 5'd0) begin if(cntChar == 4'd3 && charBuffer == "G") begin corrNum <= corrNum + 1'b1; end else if(cntChar == 4'd4 && charBuffer == "G") begin corrNum <= corrNum + 1'b1; end else if(cntChar == 4'd5 && charBuffer == "A") begin corrNum <= corrNum + 1'b1; end end if(corrNum == 2'd3) begin //检测到GGA报文，开启解析 corrNum <= 2'b0; end //---------------------------解析GGA报文各个字段------------------------------ if(rx_done == 1'b0 && corrNum == 2'd3) begin //解析UTC时间，第1域 if(cntField == 5'd1) begin if(cntChar == 4'd1) begin //UTC-hh十位 hh <= num*4'd10; end else if(cntChar == 4'd2) begin //UTC-hh个位 hh <= hh + num; end else if(cntChar == 4'd3) begin //UTC-mm十位 mm <= num*4'd10; end else if(cntChar == 4'd4) begin //UTC-mm个位 mm <= mm + num; end else if(cntChar == 4'd5) begin //UTC-ss十位 ss <= num*4'd10; end else if(cntChar == 4'd6) begin //UTC-ss个位 ss <= ss + num; end else if(cntChar == 4'd8) begin //UTC-.ss十位 ss2 <= num*4'd10; end else if(cntChar == 4'd9) begin //UTC-.ss个位 ss2 <= ss2 + num; end end //解析纬度，第2域 if(cntField == 5'd2) begin if(cntChar == 4'd1) begin //lat-dd十位 lat <= num*4'd10; end else if(cntChar == 4'd2) begin //lat-dd个位 lat <= lat + num; end else if(cntChar == 4'd3) begin //lat-mm十位 lat2 <= num*4'd10; end else if(cntChar == 4'd4) begin //lat-mm个位 lat2 <= lat2 + num; end else if(cntChar == 4'd6) begin //lat-.mmmmm第一位 lat3 <= num; end else if(cntChar == 4'd7 || cntChar == 4'd8 || cntChar == 4'd9 || cntChar == 4'd10) begin lat3 <= lat3*4'd10 + num; end end //解析南北纬标识，第3域 if(cntField == 5'd3 && cntChar == 4'd1) begin NS <= (charBuffer == "N") ? 1'b1 : 1'b0; end //解析经度，第4域 if(cntField == 5'd4) begin if(cntChar == 4'd1) begin //lon-ddd百位 lon <= num; end else if(cntChar == 4'd2 || cntChar == 4'd3) begin //lon-ddd十位、个位 lon <= lon*4'd10 + num; end else if(cntChar == 4'd4) begin //lon-mm十位 lon2 <= num*4'd10; end else if(cntChar == 4'd5) begin //lon-mm个位 lon2 <= lon2 + num; end else if(cntChar == 4'd7) begin //lon-.mmmmm第一位 lon3 <= num; end else if(cntChar == 4'd8 || cntChar == 4'd9 || cntChar == 4'd10 || cntChar == 4'd11) begin lon3 <= lon3*4'd10 + num; end end //解析东西经标识，第5域 if(cntField == 5'd5 && cntChar == 4'd1) begin EW <= (charBuffer == "E") ? 1'b1 : 1'b0; end //解析海拔高度，第9域 if(cntField == 5'd9) begin if(cntChar == 4'd1) begin alt <= num; afterDot <= 1'b0; end else if(charBuffer==".") begin afterDot <= 1'b1; alt2 <= 4'd0; end else begin if(~afterDot) begin alt <= alt*4'd10 + num; //海拔整数部分 end else begin alt2 <= alt2*4'd10 +num; //海拔小数部分 end end end end end endmodule
+--- /TABLE ---
+（4）字符显示模块 char_display.v
+--- TABLE ---
+Plaintext //VGA字符显示模块，32*32点阵字符，640*480分辨率 module char_display( input clk , //25MHz VGA时钟 input rst_n , //系统复位 output reg [ 11: 0] video_data , //RGB444颜色数据 input [ 10: 0] pixel_xpos , //像素点横坐标 input [ 10: 0] pixel_ypos , //像素点纵坐标 input data_req , //像素数据有效请求 input [ 4: 0] hh , //UTC时间-时 input [ 5: 0] mm , //UTC时间-分 input [ 5: 0] ss , //UTC时间-秒 input [ 6: 0] ss2 , //UTC时间-秒小数 input [ 6: 0] lat , //纬度-度 input [ 5: 0] lat2 , //纬度-分 input [ 16: 0] lat3 , //纬度-分小数 input NS , //南北纬标识 input [ 7: 0] lon , //经度-度 input [ 5: 0] lon2 , //经度-分 input [ 16: 0] lon3 , //经度-分小数 input EW , //东西经标识 input [ 13: 0] alt , //海拔-整数 input [ 3: 0] alt2 //海拔-小数 ); //parameter define //640*480 分辨率，单个字符32*32点阵，对应20列*15行字符 wire [4:0] x_pos ; //字符列坐标 wire [4:0] y_pos ; //字符行坐标 wire [4:0] x_cnt ; //字符内X偏移 wire [14:0] y_cnt ; //字符内Y偏移 wire [9:0] char_choose; //当前显示字符选择 reg [4:0] char_choose_case; //字符ROM索引 wire [15:0] video_data_q; //ROM输出的RGB565数据 wire [15:0] rom_addr; //字符ROM地址 //字符坐标与点阵偏移计算 assign x_pos = pixel_xpos >> 'd5 ; assign y_pos = pixel_ypos >> 'd5 ; assign x_cnt = pixel_xpos - (x_pos <<'d5) ; assign y_cnt = pixel_ypos - (y_pos <<'d5) ; //字符点阵ROM例化，存储数字、字母、符号的32*32点阵数据 gps_char_rom u_gps_char_rom( .address (rom_addr ), .clock (clk ), .rden (data_req ), .q (video_data_q) ); //ROM地址计算 assign char_choose = {y_pos, x_pos} ; assign rom_addr = data_req ? ((char_choose_case == 'd22) ?'b0 :(y_cnt << 'd9) + (y_cnt << 'd7) + (y_cnt << 'd6) + (char_choose_case << 'd5) + x_cnt ): 'b0; //RGB565转RGB444 assign video_data ={video_data_q[15:12],video_data_q[10:7],video_data_q[5:2]}; //根据屏幕坐标选择显示的字符与数值 always @(posedge clk or negedge rst_n) begin if(!rst_n) char_choose_case<='b0; else case (char_choose) //第一行：UTC时间显示 'b0000000000: char_choose_case<='d10; //字符'T' 'b0000000001: char_choose_case<='d11; //字符'U' 'b0000000010: char_choose_case<= hh / 'd10 ; //时十位 'b0000000011: char_choose_case<= hh % 'd10; //时个位 'b0000000100: char_choose_case<='d21; //字符':' 'b0000000101: char_choose_case<= mm / 'd10; //分十位 'b0000000110: char_choose_case<= mm % 'd10; //分个位 'b0000000111: char_choose_case<='d21; //字符':' 'b0000001000: char_choose_case<= ss / 'd10; //秒十位 'b0000001001: char_choose_case<= ss % 'd10; //秒个位 'b0000001010: char_choose_case<='d21; //字符'.' 'b0000001011: char_choose_case<= ss2 / 'd10; //秒小数十位 'b0000001100: char_choose_case<= ss2 % 'd10; //秒小数个位 //第二行：纬度显示 'b0000100000: char_choose_case<='d12; //字符'L' 'b0000100001: char_choose_case<='d13; //字符'A' 'b0000100010: char_choose_case<= lat / 'd10 ; //度十位 'b0000100011: char_choose_case<= lat % 'd10; //度个位 'b0000100100: char_choose_case<='d21; //字符'°' 'b0000100101: char_choose_case<= lat2 / 'd10; //分十位 'b0000100110: char_choose_case<= lat2 % 'd10; //分个位 'b0000100111: char_choose_case<='d21; //字符'.' 'b0000101000: char_choose_case<= (lat3 >>'d10) / 'd10; //分小数万位 'b0000101001: char_choose_case<= (lat3 >>'d10) % 'd10; //分小数千位 'b0001000000: char_choose_case<='d15; //字符'N' 'b0001000001: char_choose_case<='d16; //字符'S' 'b0001000010: char_choose_case<= NS ? 'd15 : 'd16; //南北纬标识 //第三行：经度显示 'b0001100000: char_choose_case<='d14; //字符'L' 'b0001100001: char_choose_case<='d13; //字符'O' 'b0001100010: char_choose_case<= lon / 'd100 ; //度百位 'b0001100011: char_choose_case<= lon % 'd100 / 'd10; //度十位 'b0001100100: char_choose_case<= lon % 'd10; //度个位 'b0001100101: char_choose_case<='d21; //字符'°' 'b0001100110: char_choose_case<= lon2 / 'd10; //分十位 'b0001100111: char_choose_case<= lon2 % 'd10; //分个位 'b0001101000: char_choose_case<='d21; //字符'.' 'b0001101001: char_choose_case<= (lon3 >>'d10) / 'd10; //分小数万位 'b0001101010: char_choose_case<= (lon3 >>'d10) % 'd10; //分小数千位 'b0010000000: char_choose_case<='d17; //字符'E' 'b0010000001: char_choose_case<='d18; //字符'W' 'b0010000010: char_choose_case<= EW ? 'd17 : 'd18; //东西经标识 //第四行：海拔显示 'b0010100000: char_choose_case<='d19; //字符'A' 'b0010100001: char_choose_case<='d20; //字符'L' 'b0010100010: char_choose_case<= (alt >> 'd10) / 'd10 ; //海拔千位 'b0010100011: char_choose_case<= (alt >> 'd10) % 'd10; //海拔百位 'b0010100100: char_choose_case<= alt % 'd1000/'d100; //海拔十位 'b0010100101: char_choose_case<= alt % 'd100 / 'd10; //海拔个位 'b0010100110: char_choose_case<= alt % 'd10; //海拔个位 'b0010100111: char_choose_case<='d21; //字符'.' 'b0010101000: char_choose_case<= alt2 / 'd10; //海拔小数位 'b0010101001: char_choose_case<= alt2 % 'd10; //海拔小数位 default: char_choose_case<='d22; //空白字符 endcase end endmodule
+--- /TABLE ---
+（5）顶层模块 gps_display_top.v
+--- TABLE ---
+Plaintext //北斗GPS定位显示顶层模块 module gps_display_top( input CLK_50, //50MHz系统时钟 input reset_n, //系统复位，低电平有效 input UART_RXD, //GPS模块串口数据输入 output video_hs, //VGA行同步信号 output video_vs, //VGA场同步信号 output [11:0] video_rgb //VGA RGB444色彩输出 ); //内部信号定义 wire clk_25m; //PLL输出25MHz VGA时钟 wire locked; //PLL锁定标志 wire sys_rst_n; //系统同步复位 //UART接收模块信号 wire uart_rx_done; wire [7:0] uart_rx_data; //GGA解析模块信号 wire gga_rx_done; wire [4:0] hh,mm,ss; wire [6:0] ss2,lat; wire [5:0] lat2,lon2; wire [16:0] lat3,lon3; wire NS,EW; wire [13:0] alt; wire [3:0] alt2; //VGA驱动模块信号 wire [10:0] pixel_xpos,pixel_ypos; wire data_req; wire [11:0] video_data; //系统复位：PLL锁定后系统正常工作 assign sys_rst_n = reset_n & locked; //************************* PLL锁相环模块 ************************* //输入50MHz，输出25MHz VGA时钟 pll_gps pll_inst ( .clk_in1 (CLK_50), .clk_out1 (clk_25m), .locked (locked), .reset (~reset_n) ); //************************* UART串口接收模块 ************************* uart_rx uart_rx_inst( .clk (CLK_50), .rst_n (sys_rst_n), .uart_rxd (UART_RXD), .uart_rx_done (uart_rx_done), .uart_rx_data (uart_rx_data) ); //************************* GGA报文解析模块 ************************* GGA GGA_inst( .rx_done_toUart (uart_rx_done), .rddat_toUart (uart_rx_data), .rx_done (gga_rx_done), .hh (hh), .mm (mm), .ss (ss), .ss2 (ss2), .lat (lat), .lat2 (lat2), .lat3 (lat3), .NS (NS), .lon (lon), .lon2 (lon2), .lon3 (lon3), .EW (EW), .alt (alt), .alt2 (alt2) ); //************************* VGA驱动模块 ************************* vga_driver vga_driver_inst( .clk (clk_25m), .rst_n (sys_rst_n), .video_data (video_data), .video_hs (video_hs), .video_vs (video_vs), .pixel_xpos (pixel_xpos), .pixel_ypos (pixel_ypos), .data_req (data_req) ); //************************* 字符显示模块 ************************* char_display char_display_inst( .clk (clk_25m), .rst_n (sys_rst_n), .video_data (video_data), .pixel_xpos (pixel_xpos), .pixel_ypos (pixel_ypos), .data_req (data_req), .hh (hh), .mm (mm), .ss (ss), .ss2 (ss2), .lat (lat), .lat2 (lat2), .lat3 (lat3), .NS (NS), .lon (lon), .lon2 (lon2), .lon3 (lon3), .EW (EW), .alt (alt), .alt2 (alt2) ); assign video_rgb = video_data; endmodule
+--- /TABLE ---
+4. 代码解析
+PLL时钟模块
+输入FPGA板载50MHz系统时钟，输出25MHz稳定时钟用于VGA显示驱动，同时输出locked锁定信号，只有PLL锁定后系统才进入正常工作状态，避免时钟不稳定导致的VGA显示异常与串口采样错误。
+UART串口接收模块
+采用三级寄存器同步处理异步串口输入信号，消除亚稳态；通过下降沿检测识别起始位，启动波特率计数器，在每个数据位的中间时刻采样数据，保证115200bps波特率下数据接收的准确性；单字节接收完成后，输出并行8位数据与接收完成标志，供后续解析模块使用。
+GGA报文解析模块
+以$符号作为报文起始标识，\n作为报文结束标识，通过逗号分隔报文字段；首先识别报文头中的GGA字符，筛选出有效定位报文，再按字段序号依次解析UTC时间、经纬度、海拔、方位标识等信息，将ASCII字符转换为对应的数值信号，完成定位数据的解析与标准化输出。
+字符显示模块
+根据VGA像素坐标计算出当前字符的行列位置与点阵内偏移地址，结合解析后的定位数据，选择对应字符的点阵ROM地址，从ROM中读取像素色彩数据；将ROM输出的RGB565数据转换为RGB444格式，输出至VGA驱动模块，实现定位信息的可视化显示。
+VGA驱动模块
+生成640×480@60Hz标准VGA时序，输出行同步、场同步信号，同时输出当前扫描的像素坐标与数据有效请求信号，驱动字符显示模块输出对应像素数据，保证VGA显示器的正常刷新与显示。
+四、引脚锁定（约束）
+--- TABLE ---
+# 系统时钟与复位引脚 set_pin_assignment { CLK_50 } { LOCATION = C4; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; } set_pin_assignment { reset_n } { LOCATION = D5; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; } # GPS模块串口输入引脚 set_pin_assignment { UART_RXD } { LOCATION = U1; IOSTANDARD = LVCMOS33; PULLTYPE = PULLUP; } # VGA接口引脚 set_pin_assignment { video_hs } { LOCATION = P10; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; } set_pin_assignment { video_vs } { LOCATION = L16; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; } # VGA RGB444色彩引脚 set_pin_assignment { video_rgb[0] } { LOCATION = virtualIO; } set_pin_assignment { video_rgb[1] } { LOCATION = virtualIO; } set_pin_assignment { video_rgb[2] } { LOCATION = virtualIO; } set_pin_assignment { video_rgb[3] } { LOCATION = K13; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; } set_pin_assignment { video_rgb[4] } { LOCATION = virtualIO; } set_pin_assignment { video_rgb[5] } { LOCATION = virtualIO; } set_pin_assignment { video_rgb[6] } { LOCATION = virtualIO; } set_pin_assignment { video_rgb[7] } { LOCATION = L15; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; } set_pin_assignment { video_rgb[8] } { LOCATION = virtualIO; } set_pin_assignment { video_rgb[9] } { LOCATION = virtualIO; } set_pin_assignment { video_rgb[10] } { LOCATION = virtualIO; } set_pin_assignment { video_rgb[11] } { LOCATION = K16; IOSTANDARD = LVCMOS33; DRIVESTRENGTH = 8; PULLTYPE = NONE; }
+--- /TABLE ---
+五、实验步骤
+1. GPS模块上位机配置
+准备USB转串口模块、杜邦线、ATK-MO1218北斗GPS模块与GNSS天线，将模块的TXD接USB转串口的RXD，模块的RXD接USB转串口的TXD，VCC接5V/3.3V，GND共地，注意电源正负极禁止接反。
+[[IMAGE]]
+[[IMAGE]]
+[[IMAGE]]
+将GNSS天线连接到模块的天线接口，USB转串口模块插入电脑USB口，打开GNSS_Viewer上位机软件。
+[[IMAGE]][[IMAGE]]
+打开上位机GNSS_Viewer-7.0.2.1修改波特率
+[[IMAGE]]
+[[IMAGE]]
+在上位机中选择对应串口号，设置波特率为34800bps（模块出厂默认值），打开串口，可看到模块输出的NMEA报文与定位信息。
+[[IMAGE]]
+点击菜单栏Binary→Configure Serial Port，在弹出的窗口中将波特率修改为115200bps，勾选保存到FLASH，点击Set，当Response栏显示Configure Serial Port Successful时，即完成波特率配置。
+图5 GNSS_Viewer上位机配置界面图
+[[IMAGE]]
+点击 GNSS_Viewer 软件菜单栏中的 Binary→Configure Serial Port
+[[IMAGE]]
+修改波特率为115200bps，选择保存到FLASH中后点击Set，至此就完成了串口速率的修改，修改成功后会在Response显示Configure Serial Port Successfu...表示修改成功
+[[IMAGE]]
+2. 硬件连接
+将配置好的ATK-MO1218北斗GPS模块插接到FPGA开发板的J1扩展口，确认模块的TXD引脚连接到FPGA的UART_RXD引脚，VCC与GND引脚与开发板对应引脚连接无误。
+将GNSS天线放置在室外开阔无遮挡的位置，保证模块的搜星定位效果。
+将VGA显示器通过VGA线连接到FPGA开发板的VGA接口，接通开发板与GPS模块的电源，确认模块电源指示灯正常点亮。
+3. 工程编译与程序下载
+在软件中完成各个模块的代码编写、字符ROM IP核定制、PLL IP核定制与引脚约束配置，执行全编译，检查无逻辑错误与时序违规后，生成FPGA.sof下载文件。
+连接开发板下载线至电脑USB口，打开Quartus Programmer，识别FPGA芯片，将生成的.sof文件烧录至FPGA核心板，确认程序下载成功。
+4. 功能测试
+观察GPS模块的PPS状态指示灯，当指示灯从常亮变为1秒周期闪烁时，说明模块已成功定位。
+观察VGA显示器，可看到屏幕上实时显示UTC时间、纬度、经度、海拔高度等定位信息，数据随模块定位结果实时更新。
+按下开发板复位键，系统复位后重新开始接收解析定位数据，VGA显示恢复正常，验证系统复位功能正常。
+六、实验结果
+GPS模块上电后，在室外开阔环境下30秒内完成搜星定位，PPS指示灯按1秒周期正常闪烁，模块通过UART串口稳定输出115200bps波特率的NMEA-0183格式GGA定位报文。
+FPGA成功完成串口数据接收、GGA报文解析，准确提取出UTC时间、经纬度、海拔等定位信息，无数据解析错误、字段错位问题。
+GPS模块插在扩展口J1上，将天线置于室外VGA显示器稳定显示640×480@60Hz画面，无闪烁、花屏、黑屏现象，定位信息按预设格式清晰显示，数据随模块定位结果实时刷新，刷新周期1秒。
+键1复位VGA接口另一端接显示器[[IMAGE]]
+[[IMAGE]]
+七、异常处理
+GPS模块PPS指示灯常亮，无法定位
+排查步骤：首先检查GNSS天线是否连接牢固，天线是否放置在室外开阔无遮挡位置，避免室内、地下室、高楼遮挡导致搜星失败；其次检查模块供电是否稳定，电压是否符合3.3V/5V要求；最后通过上位机查看模块输出报文，确认卫星数是否大于0，定位状态字段是否为1。
+串口无数据接收，解析模块无输出
+排查步骤：首先检查GPS模块与FPGA的串口接线是否正确，模块TXD接FPGA RXD，禁止接反；其次检查模块串口波特率是否与FPGA代码配置的115200bps一致，确认上位机已完成波特率配置并保存到FLASH；再通过逻辑分析仪抓取UART_RXD引脚波形，确认是否有串行数据输入；最后检查UART接收模块的波特率计数最大值是否计算正确，是否匹配50MHz系统时钟。
+VGA显示器无画面、黑屏、无同步信号
+排查步骤：首先检查VGA线是否连接牢固，显示器是否切换到对应输入通道；其次检查PLL模块是否正常锁定，25MHz VGA时钟是否正常输出；再检查VGA驱动模块的行同步、场同步信号时序是否符合640×480@60Hz标准；最后核对VGA接口引脚约束是否正确，RGB数据引脚是否虚接。
+VGA有画面但显示乱码、字符错位
+排查步骤：首先检查字符ROM的初始化mif文件是否正确，字符点阵数据与地址是否匹配；其次检查像素坐标计算逻辑是否正确，字符行列位置与点阵偏移地址是否匹配；再检查解析模块输出的定位数据是否正常，是否存在数值越界问题；最后核对VGA时钟是否为25MHz，避免时钟频率错误导致的显示错位。
+能解析到报文，但定位数据不更新、数值错误
+排查步骤：首先检查GGA报文解析模块的字段计数是否正确，逗号分隔逻辑是否正常，是否存在字段序号错位；其次检查字符转数字模块是否正常，ASCII字符与数字的转换是否正确；再检查报文头识别逻辑是否正常，是否正确筛选GGA报文，避免其他格式报文干扰；最后检查单帧报文解析完成标志是否正常，是否存在数据锁存错误。

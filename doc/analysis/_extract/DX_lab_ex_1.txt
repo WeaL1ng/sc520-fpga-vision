@@ -1,0 +1,111 @@
+########## FILE: lab_ex_1.docx ##########
+设计参考例程1
+基于安路FPGA实现
+MIPI摄像头采集并实时显示
+开发板型号：HX1P35C
+主芯片（FPGA）：    PH1P35
+2026-06
+目录
+	目录	II
+	1     概述	1
+	2     功能与原理	1
+		2.1 MIPI CSI-2 与 HDMI/TMDS 原理	1
+		2.2 系统架构与时钟结构	2
+	3     模块接口	3
+		3.1 顶层模块	3
+		3.2 MIPI DPHY 接收模块	3
+		3.3 ISP 模块	3
+		3.4 DDR2 帧缓存	4
+		3.5 HDMI 输出链	4
+		3.6 摄像头配置 ae_set / uicfgcs500	4
+	4      调试步骤	5
+		4.1 硬件连接	5
+		4.2 实验操作	5
+1概述
+本例程基于安路 PH1 系列 FPGA，实现 MIPI 摄像头实时采集、ISP 基础图像处理、DDR2 帧缓存以及 HDMI 显示输出，构成完整的视频链路。具体系统示意图如图1所示。
+主要功能如下：
+通过 MIPI DPHY 2-lane 接口接收摄像头 RAW10 视频流；
+经 CSI 解包、去马赛克（demosaic）、自动白平衡（AWB）完成 ISP 处理；
+使用板载 DDR2 作为帧缓存，解耦采集时钟域与显示时钟域；
+通过 HDMI TMDS 接口在 1024×600 分辨率下实时显示；
+支持通过 I2C 配置摄像头寄存器，并通过按键调节曝光（AE）。
+系统数据流：MIPI摄像头→MIPI DPHY RX→CSI/RAW10解包→ ISP(demosaic→AWB)→DDR2 帧缓存→HDMI时序生成→hdmi_mixer(透传)→hdmi_tx→显示器。
+图 1 系统连接示意图
+2功能与原理
+2.1 MIPI CSI-2 与 HDMI/TMDS 原理
+MIPI CSI-2 与 HDMI/TMDS 是两种面向不同应用场景的高速串行视频传输接口标准。MIPI CSI-2 采用差分数据通道（D-PHY/C-PHY）与短包/长包传输结构，每通道最高达2.5 Gbps，具备低功耗、高抗扰、多通道可扩展和帧级/行级同步机制，适用于移动设备与嵌入式摄像头场景（如手机、车载环视、无人机图传等）。HDMI/TMDS 则基于最小化传输差分信号（TMDS）编码，通过3个数据通道+1个时钟通道传输RGB/YCbCr像素、行场同步和音频/辅助数据，支持高达48 Gbps（HDMI 2.1），具备高带宽、热插拔检测、EDID握手和HDCP内容保护能力，适用于消费电子显示场景（如电视、投影仪、显示器等）。在FPGA实现中，MIPI CSI-2 接收端需处理毛刺与同步位模式（LP/HS状态切换）、Lane对准、CRC/ECC校验以及虚拟通道交织，而HDMI/TMDS接收端则需实现时钟与数据恢复（CDR）、10b解码、去交织和解扰，两者均对FPGA的I/O架构、差分信号处理和高速时钟管理提出了定制化要求。在系统分层中，MIPI CSI-2 通常位于物理层（PHY）之上，向上对接图像信号处理器（ISP）或视频处理单元（VPU），向下通过D-PHY/C-PHY与图像传感器通信；HDMI/TMDS 位于物理层与链路层之间，向上承载视频帧/音频流/控制数据（CEC、DDC），向下通过TMDS物理链路与显示终端交互，二者都是异构视频系统中连接采集与显示的核心传输标准。
+MIPI CSI-2 / HDMI 通信应用方案的主要功能如下：
+支持多种速率模式
+支持多通道Lane聚合
+支持视频时序解构与重构
+支持虚拟通道或音频/辅助数据提取
+如图2所示，MIPI CSI-2 接收端上层可将解析出的像素数据传给ISP或显示控制器，下层通过高速I/O和专用时钟管理单元（如MMCM/PLL）与物理层传感器或HDMI收发器通信。
+图 2 MIPI CSI-2与HDMI/TMDS的通信架构
+2.2 系统架构与时钟结构
+图 3 FPGA例程架构图
+3模块接口
+3.1 顶层模块
+顶层端口信号如表1所示：
+表 1 顶层模块信号表
+--- TABLE ---
+信号名 | Bits | 方向 | 功能描述
+I_sys_clk | 1 | Input | 板卡输入系统时钟
+I_rst_n | 1 | Input | 系统复位，低有效
+O_cam_scl | 1 | Output | 摄像头 I2C 时钟
+IO_cam_sda | 1 | Inout | 摄像头 I2C 数据
+O_cam_24m | 1 | Output | 摄像头 24 MHz 参考时钟
+O_cam_rst | 1 | Output | 摄像头复位（固定为高）
+I_button | 2 | Inout | 板载按键，用于 AE 调节
+O_screen_pwm | 1 | Output | 屏幕背光 PWM
+O_tmds_ch0_p ~ O_tmds_clk_p | 1×4 | Output | HDMI TMDS 差分输出
+IO_rx_clk_pad_p/n | 1×2 | Inout | MIPI 时钟 lane
+IO_rx_data_pad_p/n | 4×2 | Inout | MIPI 数据 lane
+ddr_* | — | Inout | DDR2 存储器接口
+--- /TABLE ---
+3.2 MIPI DPHY 接收模块
+mipi_dphy_rx_ph1p_mipiio_wrapper模块用于将摄像头输入的差分信号解码成并行字节数据。
+3.3 ISP 模块
+ISP模块参数和信号如下：
+表2 ISP模块参数和信号表
+--- TABLE ---
+参数 | 值
+IMG_WIDTH | 1024
+IMG_HEIGHT | 600
+BAYER_MODE | BGGR
+信号名 | Bits | 方向 | 功能描述
+axi4s_video_aclk | 1 | Input | ISP 工作时钟
+I_rst_n | 1 | Input | 复位，低有效
+I_tdata | 40 | Input | RAW10 输入数据
+I_tvalid / I_tlast / I_tuser | 1 | Input | AXI-Stream 握手
+O_tdata | 128 | Output | RGB 128-bit 输出
+O_tvalid / O_tlast / O_tuser | 1 | Output | 输出流控
+--- /TABLE ---
+3.4 DDR2 帧缓存
+ph1p35_324_ddr_wrapper模块提供 DDR2 控制器；video_in模块将 ISP 输出写入 DDR，video_out模块按 HDMI 扫描时序读出。用户侧通过mc_to_user_interface模块统一读写仲裁。
+3.5 HDMI 输出链
+uivtc模块控制输出的视频时序：有效区域为1920×1080，总像素数2200×1125。
+hdmi_mixer模块功能如下表：
+表3 hdmi_mixer模块功能表
+--- TABLE ---
+功能分类 | 功能说明
+视频透传 | DEBUG_MODE=0：直接将读取的FIFO数据延时2拍后输出
+调试模式1 | 按水平坐标显示彩色条纹（红/绿/蓝/黄/青/紫/白/灰），用于测试显示链路
+调试模式2 | 不同状态值显示不同颜色，用于监控状态机
+调试模式3 | 将 I_debug_status 的4个bit分别映射到4个水平区域的颜色控制
+坐标计数 | 利用帧起始和行结束信号产生坐标计数
+数据对齐 | 通过3级寄存器延迟将同步信号和RGB数据对齐输出
+--- /TABLE ---
+hdmi_tx模块负责将 RGB 视频编码为 TMDS 差分信号输出。
+3.6 摄像头配置 ae_set / uicfgcs500
+ae_set 负责根据用户按键生成 AE/AG 参数值，uicfgcs500 负责将这些参数通过 I2C 写入 SC500 摄像头传感器，实现曝光和增益的动态调节；
+默认 自动曝光AE=3000，自动增益AG=80；配置完成后经 I2C 写入摄像头。
+调试步骤
+4.1 硬件连接
+	将 MIPI 摄像头模块正确接入开发板 MIPI 接口；
+	用 HDMI 线连接开发板 HDMI 口与显示器；
+4.2 实验操作
+	连接硬件并上电；
+	通过 JTAG 下载 bitstream 到 FPGA；
+	等待摄像头 I2C 配置完成；
+	HDMI 显示器上出现实时摄像头画面：
+[[IMAGE]]

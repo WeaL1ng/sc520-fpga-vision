@@ -1,0 +1,567 @@
+pc_time,type,frame_id,ts_ms,latency_ms,mode,flags,summary
+18:39:47,VITAL,0,0,15,5,0,"[VITAL] f=0      lat=  15ms mode=5 HR=72.0 BPM roi_mean=130 ac=20 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,1,16,13,5,0,[STATUS] f=1      lat=  13ms mode=5 luma=121 clip=1.2% ae=1201 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,1,16,15,5,0,"[VITAL] f=1      lat=  15ms mode=5 HR=72.1 BPM roi_mean=130 ac=22 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,2,32,14,5,0,[STATUS] f=2      lat=  14ms mode=5 luma=122 clip=1.2% ae=1202 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,2,32,15,5,0,"[VITAL] f=2      lat=  15ms mode=5 HR=72.2 BPM roi_mean=131 ac=25 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,3,48,15,5,0,[STATUS] f=3      lat=  15ms mode=5 luma=123 clip=1.2% ae=1203 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,3,48,15,5,0,"[VITAL] f=3      lat=  15ms mode=5 HR=72.4 BPM roi_mean=132 ac=28 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,4,64,16,5,0,[STATUS] f=4      lat=  16ms mode=5 luma=124 clip=1.2% ae=1204 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,4,64,15,5,0,"[VITAL] f=4      lat=  15ms mode=5 HR=72.5 BPM roi_mean=133 ac=30 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,5,80,12,5,0,[STATUS] f=5      lat=  12ms mode=5 luma=125 clip=1.2% ae=1205 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,5,80,15,5,0,"[VITAL] f=5      lat=  15ms mode=5 HR=72.7 BPM roi_mean=134 ac=32 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,6,96,13,5,0,[STATUS] f=6      lat=  13ms mode=5 luma=126 clip=1.2% ae=1206 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,6,96,15,5,0,"[VITAL] f=6      lat=  15ms mode=5 HR=72.8 BPM roi_mean=135 ac=33 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,7,112,14,5,0,[STATUS] f=7      lat=  14ms mode=5 luma=127 clip=1.2% ae=1207 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,7,112,15,5,0,"[VITAL] f=7      lat=  15ms mode=5 HR=73.0 BPM roi_mean=135 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,8,128,15,5,0,[STATUS] f=8      lat=  15ms mode=5 luma=128 clip=1.2% ae=1208 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,8,128,15,5,0,"[VITAL] f=8      lat=  15ms mode=5 HR=73.1 BPM roi_mean=135 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,9,144,16,5,0,[STATUS] f=9      lat=  16ms mode=5 luma=129 clip=1.2% ae=1209 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,9,144,15,5,0,"[VITAL] f=9      lat=  15ms mode=5 HR=73.3 BPM roi_mean=135 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,10,160,12,5,0,[STATUS] f=10     lat=  12ms mode=5 luma=130 clip=1.2% ae=1210 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,10,160,15,5,0,"[VITAL] f=10     lat=  15ms mode=5 HR=73.4 BPM roi_mean=135 ac=33 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,11,176,13,5,0,[STATUS] f=11     lat=  13ms mode=5 luma=131 clip=1.2% ae=1211 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,11,176,15,5,0,"[VITAL] f=11     lat=  15ms mode=5 HR=73.5 BPM roi_mean=135 ac=32 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,12,192,14,5,0,[STATUS] f=12     lat=  14ms mode=5 luma=132 clip=1.2% ae=1212 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,12,192,15,5,0,"[VITAL] f=12     lat=  15ms mode=5 HR=73.6 BPM roi_mean=135 ac=30 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,13,208,15,5,0,[STATUS] f=13     lat=  15ms mode=5 luma=133 clip=1.2% ae=1213 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,13,208,15,5,0,"[VITAL] f=13     lat=  15ms mode=5 HR=73.8 BPM roi_mean=134 ac=27 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,14,224,16,5,0,[STATUS] f=14     lat=  16ms mode=5 luma=134 clip=1.2% ae=1214 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,14,224,15,5,0,"[VITAL] f=14     lat=  15ms mode=5 HR=73.9 BPM roi_mean=134 ac=25 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,15,240,12,5,0,[STATUS] f=15     lat=  12ms mode=5 luma=135 clip=1.2% ae=1215 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,15,240,15,5,0,"[VITAL] f=15     lat=  15ms mode=5 HR=74.0 BPM roi_mean=133 ac=22 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,16,256,13,5,0,[STATUS] f=16     lat=  13ms mode=5 luma=136 clip=1.2% ae=1216 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,16,256,15,5,0,"[VITAL] f=16     lat=  15ms mode=5 HR=74.1 BPM roi_mean=132 ac=19 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,17,272,14,5,0,[STATUS] f=17     lat=  14ms mode=5 luma=137 clip=1.2% ae=1217 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,17,272,15,5,0,"[VITAL] f=17     lat=  15ms mode=5 HR=74.2 BPM roi_mean=131 ac=16 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,18,288,15,5,0,[STATUS] f=18     lat=  15ms mode=5 luma=138 clip=1.2% ae=1218 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,18,288,15,5,0,"[VITAL] f=18     lat=  15ms mode=5 HR=74.3 BPM roi_mean=130 ac=13 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,19,304,16,5,0,[STATUS] f=19     lat=  16ms mode=5 luma=139 clip=1.2% ae=1219 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,19,304,15,5,0,"[VITAL] f=19     lat=  15ms mode=5 HR=74.4 BPM roi_mean=130 ac=10 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,20,320,12,5,0,[STATUS] f=20     lat=  12ms mode=5 luma=140 clip=1.2% ae=1220 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,20,320,15,5,0,"[VITAL] f=20     lat=  15ms mode=5 HR=74.5 BPM roi_mean=129 ac=8 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,21,336,13,5,0,[STATUS] f=21     lat=  13ms mode=5 luma=141 clip=1.2% ae=1221 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,21,336,15,5,0,"[VITAL] f=21     lat=  15ms mode=5 HR=74.6 BPM roi_mean=128 ac=6 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,22,352,14,5,0,[STATUS] f=22     lat=  14ms mode=5 luma=142 clip=1.2% ae=1222 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,22,352,15,5,0,"[VITAL] f=22     lat=  15ms mode=5 HR=74.6 BPM roi_mean=127 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,23,368,15,5,0,[STATUS] f=23     lat=  15ms mode=5 luma=143 clip=1.2% ae=1223 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,23,368,15,5,0,"[VITAL] f=23     lat=  15ms mode=5 HR=74.7 BPM roi_mean=127 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,24,384,16,5,0,[STATUS] f=24     lat=  16ms mode=5 luma=144 clip=1.2% ae=1224 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,24,384,15,5,0,"[VITAL] f=24     lat=  15ms mode=5 HR=74.7 BPM roi_mean=126 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,25,400,12,5,0,[STATUS] f=25     lat=  12ms mode=5 luma=145 clip=1.2% ae=1225 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,25,400,15,5,0,"[VITAL] f=25     lat=  15ms mode=5 HR=74.8 BPM roi_mean=125 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,26,416,13,5,0,[STATUS] f=26     lat=  13ms mode=5 luma=146 clip=1.2% ae=1226 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,26,416,15,5,0,"[VITAL] f=26     lat=  15ms mode=5 HR=74.8 BPM roi_mean=125 ac=6 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,27,432,14,5,0,[STATUS] f=27     lat=  14ms mode=5 luma=147 clip=1.2% ae=1227 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,27,432,15,5,0,"[VITAL] f=27     lat=  15ms mode=5 HR=74.9 BPM roi_mean=125 ac=8 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,28,448,15,5,0,[STATUS] f=28     lat=  15ms mode=5 luma=148 clip=1.2% ae=1228 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,28,448,15,5,0,"[VITAL] f=28     lat=  15ms mode=5 HR=74.9 BPM roi_mean=125 ac=10 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,29,464,16,5,0,[STATUS] f=29     lat=  16ms mode=5 luma=149 clip=1.2% ae=1229 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,29,464,15,5,0,"[VITAL] f=29     lat=  15ms mode=5 HR=74.9 BPM roi_mean=125 ac=13 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,30,480,12,5,0,[STATUS] f=30     lat=  12ms mode=5 luma=120 clip=1.2% ae=1230 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,30,480,15,5,0,"[VITAL] f=30     lat=  15ms mode=5 HR=74.9 BPM roi_mean=125 ac=15 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,31,496,13,5,0,[STATUS] f=31     lat=  13ms mode=5 luma=121 clip=1.2% ae=1231 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,31,496,15,5,0,"[VITAL] f=31     lat=  15ms mode=5 HR=74.9 BPM roi_mean=125 ac=18 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,32,512,14,5,0,[STATUS] f=32     lat=  14ms mode=5 luma=122 clip=1.2% ae=1232 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,32,512,15,5,0,"[VITAL] f=32     lat=  15ms mode=5 HR=74.9 BPM roi_mean=126 ac=21 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,33,528,15,5,0,[STATUS] f=33     lat=  15ms mode=5 luma=123 clip=1.2% ae=1233 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,33,528,15,5,0,"[VITAL] f=33     lat=  15ms mode=5 HR=74.9 BPM roi_mean=126 ac=24 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,34,544,16,5,0,[STATUS] f=34     lat=  16ms mode=5 luma=124 clip=1.2% ae=1234 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,34,544,15,5,0,"[VITAL] f=34     lat=  15ms mode=5 HR=74.9 BPM roi_mean=127 ac=27 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,35,560,12,5,0,[STATUS] f=35     lat=  12ms mode=5 luma=125 clip=1.2% ae=1235 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,35,560,15,5,0,"[VITAL] f=35     lat=  15ms mode=5 HR=74.9 BPM roi_mean=128 ac=29 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,36,576,13,5,0,[STATUS] f=36     lat=  13ms mode=5 luma=126 clip=1.2% ae=1236 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,36,576,15,5,0,"[VITAL] f=36     lat=  15ms mode=5 HR=74.9 BPM roi_mean=129 ac=31 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,37,592,14,5,0,[STATUS] f=37     lat=  14ms mode=5 luma=127 clip=1.2% ae=1237 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,37,592,15,5,0,"[VITAL] f=37     lat=  15ms mode=5 HR=74.8 BPM roi_mean=130 ac=33 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,38,608,15,5,0,[STATUS] f=38     lat=  15ms mode=5 luma=128 clip=1.2% ae=1238 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,38,608,15,5,0,"[VITAL] f=38     lat=  15ms mode=5 HR=74.8 BPM roi_mean=130 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,39,624,16,5,0,[STATUS] f=39     lat=  16ms mode=5 luma=129 clip=1.2% ae=1239 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,39,624,15,5,0,"[VITAL] f=39     lat=  15ms mode=5 HR=74.7 BPM roi_mean=131 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,40,640,12,5,0,[STATUS] f=40     lat=  12ms mode=5 luma=130 clip=1.2% ae=1240 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,40,640,15,5,0,"[VITAL] f=40     lat=  15ms mode=5 HR=74.7 BPM roi_mean=132 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,41,656,13,5,0,[STATUS] f=41     lat=  13ms mode=5 luma=131 clip=1.2% ae=1241 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,41,656,15,5,0,"[VITAL] f=41     lat=  15ms mode=5 HR=74.6 BPM roi_mean=133 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,42,672,14,5,0,[STATUS] f=42     lat=  14ms mode=5 luma=132 clip=1.2% ae=1242 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,42,672,15,5,0,"[VITAL] f=42     lat=  15ms mode=5 HR=74.5 BPM roi_mean=133 ac=32 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,43,688,15,5,0,[STATUS] f=43     lat=  15ms mode=5 luma=133 clip=1.2% ae=1243 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,43,688,15,5,0,"[VITAL] f=43     lat=  15ms mode=5 HR=74.5 BPM roi_mean=134 ac=31 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,44,704,16,5,0,[STATUS] f=44     lat=  16ms mode=5 luma=134 clip=1.2% ae=1244 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,44,704,15,5,0,"[VITAL] f=44     lat=  15ms mode=5 HR=74.4 BPM roi_mean=135 ac=28 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,45,720,12,5,0,[STATUS] f=45     lat=  12ms mode=5 luma=135 clip=1.2% ae=1245 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,45,720,15,5,0,"[VITAL] f=45     lat=  15ms mode=5 HR=74.3 BPM roi_mean=135 ac=26 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,46,736,13,5,0,[STATUS] f=46     lat=  13ms mode=5 luma=136 clip=1.2% ae=1246 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,46,736,15,5,0,"[VITAL] f=46     lat=  15ms mode=5 HR=74.2 BPM roi_mean=135 ac=23 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,47,752,14,5,0,[STATUS] f=47     lat=  14ms mode=5 luma=137 clip=1.2% ae=1247 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,47,752,15,5,0,"[VITAL] f=47     lat=  15ms mode=5 HR=74.1 BPM roi_mean=135 ac=20 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,48,768,15,5,0,[STATUS] f=48     lat=  15ms mode=5 luma=138 clip=1.2% ae=1248 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,48,768,15,5,0,"[VITAL] f=48     lat=  15ms mode=5 HR=74.0 BPM roi_mean=135 ac=17 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,49,784,16,5,0,[STATUS] f=49     lat=  16ms mode=5 luma=139 clip=1.2% ae=1249 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,49,784,15,5,0,"[VITAL] f=49     lat=  15ms mode=5 HR=73.9 BPM roi_mean=135 ac=14 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,50,800,12,5,0,[STATUS] f=50     lat=  12ms mode=5 luma=140 clip=1.2% ae=1250 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,50,800,15,5,0,"[VITAL] f=50     lat=  15ms mode=5 HR=73.7 BPM roi_mean=135 ac=11 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,51,816,13,5,0,[STATUS] f=51     lat=  13ms mode=5 luma=141 clip=1.2% ae=1251 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,51,816,15,5,0,"[VITAL] f=51     lat=  15ms mode=5 HR=73.6 BPM roi_mean=134 ac=9 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,52,832,14,5,0,[STATUS] f=52     lat=  14ms mode=5 luma=142 clip=1.2% ae=1252 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,52,832,15,5,0,"[VITAL] f=52     lat=  15ms mode=5 HR=73.5 BPM roi_mean=134 ac=7 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,53,848,15,5,0,[STATUS] f=53     lat=  15ms mode=5 luma=143 clip=1.2% ae=1253 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,53,848,15,5,0,"[VITAL] f=53     lat=  15ms mode=5 HR=73.4 BPM roi_mean=133 ac=6 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,54,864,16,5,0,[STATUS] f=54     lat=  16ms mode=5 luma=144 clip=1.2% ae=1254 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,54,864,15,5,0,"[VITAL] f=54     lat=  15ms mode=5 HR=73.2 BPM roi_mean=132 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,55,880,12,5,0,[STATUS] f=55     lat=  12ms mode=5 luma=145 clip=1.2% ae=1255 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,55,880,15,5,0,"[VITAL] f=55     lat=  15ms mode=5 HR=73.1 BPM roi_mean=131 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,56,896,13,5,0,[STATUS] f=56     lat=  13ms mode=5 luma=146 clip=1.2% ae=1256 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,56,896,15,5,0,"[VITAL] f=56     lat=  15ms mode=5 HR=73.0 BPM roi_mean=130 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,57,912,14,5,0,[STATUS] f=57     lat=  14ms mode=5 luma=147 clip=1.2% ae=1257 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,57,912,15,5,0,"[VITAL] f=57     lat=  15ms mode=5 HR=72.8 BPM roi_mean=130 ac=6 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,58,928,15,5,0,[STATUS] f=58     lat=  15ms mode=5 luma=148 clip=1.2% ae=1258 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,58,928,15,5,0,"[VITAL] f=58     lat=  15ms mode=5 HR=72.7 BPM roi_mean=129 ac=7 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,59,944,16,5,0,[STATUS] f=59     lat=  16ms mode=5 luma=149 clip=1.2% ae=1259 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,59,944,15,5,0,"[VITAL] f=59     lat=  15ms mode=5 HR=72.5 BPM roi_mean=128 ac=9 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,60,960,12,5,0,[STATUS] f=60     lat=  12ms mode=5 luma=120 clip=1.2% ae=1260 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,60,960,15,5,0,"[VITAL] f=60     lat=  15ms mode=5 HR=72.4 BPM roi_mean=127 ac=11 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,61,976,13,5,0,[STATUS] f=61     lat=  13ms mode=5 luma=121 clip=1.2% ae=1261 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,61,976,15,5,0,"[VITAL] f=61     lat=  15ms mode=5 HR=72.2 BPM roi_mean=126 ac=14 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,62,992,14,5,0,[STATUS] f=62     lat=  14ms mode=5 luma=122 clip=1.2% ae=1262 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,62,992,15,5,0,"[VITAL] f=62     lat=  15ms mode=5 HR=72.1 BPM roi_mean=126 ac=17 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,63,1008,15,5,0,[STATUS] f=63     lat=  15ms mode=5 luma=123 clip=1.2% ae=1263 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,63,1008,15,5,0,"[VITAL] f=63     lat=  15ms mode=5 HR=71.9 BPM roi_mean=125 ac=20 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,64,1024,16,5,0,[STATUS] f=64     lat=  16ms mode=5 luma=124 clip=1.2% ae=1264 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,64,1024,15,5,0,"[VITAL] f=64     lat=  15ms mode=5 HR=71.8 BPM roi_mean=125 ac=23 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,65,1040,12,5,0,[STATUS] f=65     lat=  12ms mode=5 luma=125 clip=1.2% ae=1265 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,65,1040,15,5,0,"[VITAL] f=65     lat=  15ms mode=5 HR=71.6 BPM roi_mean=125 ac=26 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,66,1056,13,5,0,[STATUS] f=66     lat=  13ms mode=5 luma=126 clip=1.2% ae=1266 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,66,1056,15,5,0,"[VITAL] f=66     lat=  15ms mode=5 HR=71.5 BPM roi_mean=125 ac=28 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,67,1072,14,5,0,[STATUS] f=67     lat=  14ms mode=5 luma=127 clip=1.2% ae=1267 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,67,1072,15,5,0,"[VITAL] f=67     lat=  15ms mode=5 HR=71.3 BPM roi_mean=125 ac=31 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,68,1088,15,5,0,[STATUS] f=68     lat=  15ms mode=5 luma=128 clip=1.2% ae=1268 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,68,1088,15,5,0,"[VITAL] f=68     lat=  15ms mode=5 HR=71.2 BPM roi_mean=125 ac=32 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,69,1104,16,5,0,[STATUS] f=69     lat=  16ms mode=5 luma=129 clip=1.2% ae=1269 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,69,1104,15,5,0,"[VITAL] f=69     lat=  15ms mode=5 HR=71.0 BPM roi_mean=125 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,70,1120,12,5,0,[STATUS] f=70     lat=  12ms mode=5 luma=130 clip=1.2% ae=1270 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,70,1120,15,5,0,"[VITAL] f=70     lat=  15ms mode=5 HR=70.9 BPM roi_mean=126 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,71,1136,13,5,0,[STATUS] f=71     lat=  13ms mode=5 luma=131 clip=1.2% ae=1271 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,71,1136,15,5,0,"[VITAL] f=71     lat=  15ms mode=5 HR=70.8 BPM roi_mean=126 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,72,1152,14,5,0,[STATUS] f=72     lat=  14ms mode=5 luma=132 clip=1.2% ae=1272 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,72,1152,15,5,0,"[VITAL] f=72     lat=  15ms mode=5 HR=70.6 BPM roi_mean=127 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,73,1168,15,5,0,[STATUS] f=73     lat=  15ms mode=5 luma=133 clip=1.2% ae=1273 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,73,1168,15,5,0,"[VITAL] f=73     lat=  15ms mode=5 HR=70.5 BPM roi_mean=128 ac=33 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,74,1184,16,5,0,[STATUS] f=74     lat=  16ms mode=5 luma=134 clip=1.2% ae=1274 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,74,1184,15,5,0,"[VITAL] f=74     lat=  15ms mode=5 HR=70.4 BPM roi_mean=129 ac=31 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,75,1200,12,5,0,[STATUS] f=75     lat=  12ms mode=5 luma=135 clip=1.2% ae=1275 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,75,1200,15,5,0,"[VITAL] f=75     lat=  15ms mode=5 HR=70.2 BPM roi_mean=130 ac=29 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,76,1216,13,5,0,[STATUS] f=76     lat=  13ms mode=5 luma=136 clip=1.2% ae=1276 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,76,1216,15,5,0,"[VITAL] f=76     lat=  15ms mode=5 HR=70.1 BPM roi_mean=130 ac=27 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,77,1232,14,5,0,[STATUS] f=77     lat=  14ms mode=5 luma=137 clip=1.2% ae=1277 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,77,1232,15,5,0,"[VITAL] f=77     lat=  15ms mode=5 HR=70.0 BPM roi_mean=131 ac=24 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,78,1248,15,5,0,[STATUS] f=78     lat=  15ms mode=5 luma=138 clip=1.2% ae=1278 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,78,1248,15,5,0,"[VITAL] f=78     lat=  15ms mode=5 HR=69.9 BPM roi_mean=132 ac=21 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,79,1264,16,5,0,[STATUS] f=79     lat=  16ms mode=5 luma=139 clip=1.2% ae=1279 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,79,1264,15,5,0,"[VITAL] f=79     lat=  15ms mode=5 HR=69.8 BPM roi_mean=133 ac=18 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,80,1280,12,5,0,[STATUS] f=80     lat=  12ms mode=5 luma=140 clip=1.2% ae=1280 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,80,1280,15,5,0,"[VITAL] f=80     lat=  15ms mode=5 HR=69.7 BPM roi_mean=134 ac=15 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,81,1296,13,5,0,[STATUS] f=81     lat=  13ms mode=5 luma=141 clip=1.2% ae=1281 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,81,1296,15,5,0,"[VITAL] f=81     lat=  15ms mode=5 HR=69.6 BPM roi_mean=134 ac=12 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,82,1312,14,5,0,[STATUS] f=82     lat=  14ms mode=5 luma=142 clip=1.2% ae=1282 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,82,1312,15,5,0,"[VITAL] f=82     lat=  15ms mode=5 HR=69.5 BPM roi_mean=135 ac=10 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,83,1328,15,5,0,[STATUS] f=83     lat=  15ms mode=5 luma=143 clip=1.2% ae=1283 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,83,1328,15,5,0,"[VITAL] f=83     lat=  15ms mode=5 HR=69.4 BPM roi_mean=135 ac=8 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,84,1344,16,5,0,[STATUS] f=84     lat=  16ms mode=5 luma=144 clip=1.2% ae=1284 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,84,1344,15,5,0,"[VITAL] f=84     lat=  15ms mode=5 HR=69.3 BPM roi_mean=135 ac=6 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,85,1360,12,5,0,[STATUS] f=85     lat=  12ms mode=5 luma=145 clip=1.2% ae=1285 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,85,1360,15,5,0,"[VITAL] f=85     lat=  15ms mode=5 HR=69.3 BPM roi_mean=135 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,86,1376,13,5,0,[STATUS] f=86     lat=  13ms mode=5 luma=146 clip=1.2% ae=1286 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,86,1376,15,5,0,"[VITAL] f=86     lat=  15ms mode=5 HR=69.2 BPM roi_mean=135 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,87,1392,14,5,0,[STATUS] f=87     lat=  14ms mode=5 luma=147 clip=1.2% ae=1287 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,87,1392,15,5,0,"[VITAL] f=87     lat=  15ms mode=5 HR=69.1 BPM roi_mean=135 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,88,1408,15,5,0,[STATUS] f=88     lat=  15ms mode=5 luma=148 clip=1.2% ae=1288 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,88,1408,15,5,0,"[VITAL] f=88     lat=  15ms mode=5 HR=69.1 BPM roi_mean=135 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,89,1424,16,5,0,[STATUS] f=89     lat=  16ms mode=5 luma=149 clip=1.2% ae=1289 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,89,1424,15,5,0,"[VITAL] f=89     lat=  15ms mode=5 HR=69.1 BPM roi_mean=134 ac=6 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,90,1440,12,5,0,[STATUS] f=90     lat=  12ms mode=5 luma=120 clip=1.2% ae=1290 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,90,1440,15,5,0,"[VITAL] f=90     lat=  15ms mode=5 HR=69.0 BPM roi_mean=133 ac=8 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,91,1456,13,5,0,[STATUS] f=91     lat=  13ms mode=5 luma=121 clip=1.2% ae=1291 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,91,1456,15,5,0,"[VITAL] f=91     lat=  15ms mode=5 HR=69.0 BPM roi_mean=133 ac=10 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,92,1472,14,5,0,[STATUS] f=92     lat=  14ms mode=5 luma=122 clip=1.2% ae=1292 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,92,1472,15,5,0,"[VITAL] f=92     lat=  15ms mode=5 HR=69.0 BPM roi_mean=132 ac=13 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,93,1488,15,5,0,[STATUS] f=93     lat=  15ms mode=5 luma=123 clip=1.2% ae=1293 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,93,1488,15,5,0,"[VITAL] f=93     lat=  15ms mode=5 HR=69.0 BPM roi_mean=131 ac=16 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,94,1504,16,5,0,[STATUS] f=94     lat=  16ms mode=5 luma=124 clip=1.2% ae=1294 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,94,1504,15,5,0,"[VITAL] f=94     lat=  15ms mode=5 HR=69.0 BPM roi_mean=130 ac=19 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,95,1520,12,5,0,[STATUS] f=95     lat=  12ms mode=5 luma=125 clip=1.2% ae=1295 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,95,1520,15,5,0,"[VITAL] f=95     lat=  15ms mode=5 HR=69.0 BPM roi_mean=130 ac=22 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,96,1536,13,5,0,[STATUS] f=96     lat=  13ms mode=5 luma=126 clip=1.2% ae=1296 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,96,1536,15,5,0,"[VITAL] f=96     lat=  15ms mode=5 HR=69.0 BPM roi_mean=129 ac=25 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,97,1552,14,5,0,[STATUS] f=97     lat=  14ms mode=5 luma=127 clip=1.2% ae=1297 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,97,1552,15,5,0,"[VITAL] f=97     lat=  15ms mode=5 HR=69.0 BPM roi_mean=128 ac=27 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,98,1568,15,5,0,[STATUS] f=98     lat=  15ms mode=5 luma=128 clip=1.2% ae=1298 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,98,1568,15,5,0,"[VITAL] f=98     lat=  15ms mode=5 HR=69.0 BPM roi_mean=127 ac=30 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,99,1584,16,5,0,[STATUS] f=99     lat=  16ms mode=5 luma=129 clip=1.2% ae=1299 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,99,1584,15,5,0,"[VITAL] f=99     lat=  15ms mode=5 HR=69.0 BPM roi_mean=126 ac=32 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,100,1600,12,5,0,[STATUS] f=100    lat=  12ms mode=5 luma=130 clip=1.2% ae=1200 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,100,1600,15,5,0,"[VITAL] f=100    lat=  15ms mode=5 HR=69.1 BPM roi_mean=126 ac=33 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,101,1616,13,5,0,[STATUS] f=101    lat=  13ms mode=5 luma=131 clip=1.2% ae=1201 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,101,1616,15,5,0,"[VITAL] f=101    lat=  15ms mode=5 HR=69.1 BPM roi_mean=125 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,102,1632,14,5,0,[STATUS] f=102    lat=  14ms mode=5 luma=132 clip=1.2% ae=1202 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,102,1632,15,5,0,"[VITAL] f=102    lat=  15ms mode=5 HR=69.2 BPM roi_mean=125 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,103,1648,15,5,0,[STATUS] f=103    lat=  15ms mode=5 luma=133 clip=1.2% ae=1203 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,103,1648,15,5,0,"[VITAL] f=103    lat=  15ms mode=5 HR=69.2 BPM roi_mean=125 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,104,1664,16,5,0,[STATUS] f=104    lat=  16ms mode=5 luma=134 clip=1.2% ae=1204 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,104,1664,15,5,0,"[VITAL] f=104    lat=  15ms mode=5 HR=69.3 BPM roi_mean=125 ac=33 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,105,1680,12,5,0,[STATUS] f=105    lat=  12ms mode=5 luma=135 clip=1.2% ae=1205 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,105,1680,15,5,0,"[VITAL] f=105    lat=  15ms mode=5 HR=69.4 BPM roi_mean=125 ac=32 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,106,1696,13,5,0,[STATUS] f=106    lat=  13ms mode=5 luma=136 clip=1.2% ae=1206 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,106,1696,15,5,0,"[VITAL] f=106    lat=  15ms mode=5 HR=69.5 BPM roi_mean=125 ac=30 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,107,1712,14,5,0,[STATUS] f=107    lat=  14ms mode=5 luma=137 clip=1.2% ae=1207 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,107,1712,15,5,0,"[VITAL] f=107    lat=  15ms mode=5 HR=69.5 BPM roi_mean=125 ac=28 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,108,1728,15,5,0,[STATUS] f=108    lat=  15ms mode=5 luma=138 clip=1.2% ae=1208 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,108,1728,15,5,0,"[VITAL] f=108    lat=  15ms mode=5 HR=69.6 BPM roi_mean=126 ac=25 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,109,1744,16,5,0,[STATUS] f=109    lat=  16ms mode=5 luma=139 clip=1.2% ae=1209 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,109,1744,15,5,0,"[VITAL] f=109    lat=  15ms mode=5 HR=69.7 BPM roi_mean=127 ac=22 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,110,1760,12,5,0,[STATUS] f=110    lat=  12ms mode=5 luma=140 clip=1.2% ae=1210 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,110,1760,15,5,0,"[VITAL] f=110    lat=  15ms mode=5 HR=69.8 BPM roi_mean=128 ac=19 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,111,1776,13,5,0,[STATUS] f=111    lat=  13ms mode=5 luma=141 clip=1.2% ae=1211 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,111,1776,15,5,0,"[VITAL] f=111    lat=  15ms mode=5 HR=69.9 BPM roi_mean=128 ac=16 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,112,1792,14,5,0,[STATUS] f=112    lat=  14ms mode=5 luma=142 clip=1.2% ae=1212 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,112,1792,15,5,0,"[VITAL] f=112    lat=  15ms mode=5 HR=70.1 BPM roi_mean=129 ac=14 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,113,1808,15,5,0,[STATUS] f=113    lat=  15ms mode=5 luma=143 clip=1.2% ae=1213 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,113,1808,15,5,0,"[VITAL] f=113    lat=  15ms mode=5 HR=70.2 BPM roi_mean=130 ac=11 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,114,1824,16,5,0,[STATUS] f=114    lat=  16ms mode=5 luma=144 clip=1.2% ae=1214 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,114,1824,15,5,0,"[VITAL] f=114    lat=  15ms mode=5 HR=70.3 BPM roi_mean=130 ac=9 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,115,1840,12,5,0,[STATUS] f=115    lat=  12ms mode=5 luma=145 clip=1.2% ae=1215 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,115,1840,15,5,0,"[VITAL] f=115    lat=  15ms mode=5 HR=70.4 BPM roi_mean=131 ac=7 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,116,1856,13,5,0,[STATUS] f=116    lat=  13ms mode=5 luma=146 clip=1.2% ae=1216 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,116,1856,15,5,0,"[VITAL] f=116    lat=  15ms mode=5 HR=70.6 BPM roi_mean=132 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,117,1872,14,5,0,[STATUS] f=117    lat=  14ms mode=5 luma=147 clip=1.2% ae=1217 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,117,1872,15,5,0,"[VITAL] f=117    lat=  15ms mode=5 HR=70.7 BPM roi_mean=133 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,118,1888,15,5,0,[STATUS] f=118    lat=  15ms mode=5 luma=148 clip=1.2% ae=1218 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,118,1888,15,5,0,"[VITAL] f=118    lat=  15ms mode=5 HR=70.8 BPM roi_mean=134 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,119,1904,16,5,0,[STATUS] f=119    lat=  16ms mode=5 luma=149 clip=1.2% ae=1219 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,119,1904,15,5,0,"[VITAL] f=119    lat=  15ms mode=5 HR=71.0 BPM roi_mean=134 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,0,0,12,5,0,[STATUS] f=0      lat=  12ms mode=5 luma=120 clip=1.2% ae=1200 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,0,0,15,5,0,"[VITAL] f=0      lat=  15ms mode=5 HR=72.0 BPM roi_mean=130 ac=20 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,1,16,13,5,0,[STATUS] f=1      lat=  13ms mode=5 luma=121 clip=1.2% ae=1201 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,1,16,15,5,0,"[VITAL] f=1      lat=  15ms mode=5 HR=72.1 BPM roi_mean=130 ac=22 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,2,32,14,5,0,[STATUS] f=2      lat=  14ms mode=5 luma=122 clip=1.2% ae=1202 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,2,32,15,5,0,"[VITAL] f=2      lat=  15ms mode=5 HR=72.2 BPM roi_mean=131 ac=25 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,3,48,15,5,0,[STATUS] f=3      lat=  15ms mode=5 luma=123 clip=1.2% ae=1203 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,3,48,15,5,0,"[VITAL] f=3      lat=  15ms mode=5 HR=72.4 BPM roi_mean=132 ac=28 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,4,64,16,5,0,[STATUS] f=4      lat=  16ms mode=5 luma=124 clip=1.2% ae=1204 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,4,64,15,5,0,"[VITAL] f=4      lat=  15ms mode=5 HR=72.5 BPM roi_mean=133 ac=30 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,5,80,12,5,0,[STATUS] f=5      lat=  12ms mode=5 luma=125 clip=1.2% ae=1205 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,5,80,15,5,0,"[VITAL] f=5      lat=  15ms mode=5 HR=72.7 BPM roi_mean=134 ac=32 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,6,96,13,5,0,[STATUS] f=6      lat=  13ms mode=5 luma=126 clip=1.2% ae=1206 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,6,96,15,5,0,"[VITAL] f=6      lat=  15ms mode=5 HR=72.8 BPM roi_mean=135 ac=33 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,7,112,14,5,0,[STATUS] f=7      lat=  14ms mode=5 luma=127 clip=1.2% ae=1207 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,7,112,15,5,0,"[VITAL] f=7      lat=  15ms mode=5 HR=73.0 BPM roi_mean=135 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,8,128,15,5,0,[STATUS] f=8      lat=  15ms mode=5 luma=128 clip=1.2% ae=1208 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,8,128,15,5,0,"[VITAL] f=8      lat=  15ms mode=5 HR=73.1 BPM roi_mean=135 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,9,144,16,5,0,[STATUS] f=9      lat=  16ms mode=5 luma=129 clip=1.2% ae=1209 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,9,144,15,5,0,"[VITAL] f=9      lat=  15ms mode=5 HR=73.3 BPM roi_mean=135 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,10,160,12,5,0,[STATUS] f=10     lat=  12ms mode=5 luma=130 clip=1.2% ae=1210 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,10,160,15,5,0,"[VITAL] f=10     lat=  15ms mode=5 HR=73.4 BPM roi_mean=135 ac=33 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,11,176,13,5,0,[STATUS] f=11     lat=  13ms mode=5 luma=131 clip=1.2% ae=1211 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,11,176,15,5,0,"[VITAL] f=11     lat=  15ms mode=5 HR=73.5 BPM roi_mean=135 ac=32 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,12,192,14,5,0,[STATUS] f=12     lat=  14ms mode=5 luma=132 clip=1.2% ae=1212 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,12,192,15,5,0,"[VITAL] f=12     lat=  15ms mode=5 HR=73.6 BPM roi_mean=135 ac=30 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,13,208,15,5,0,[STATUS] f=13     lat=  15ms mode=5 luma=133 clip=1.2% ae=1213 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,13,208,15,5,0,"[VITAL] f=13     lat=  15ms mode=5 HR=73.8 BPM roi_mean=134 ac=27 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,14,224,16,5,0,[STATUS] f=14     lat=  16ms mode=5 luma=134 clip=1.2% ae=1214 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,14,224,15,5,0,"[VITAL] f=14     lat=  15ms mode=5 HR=73.9 BPM roi_mean=134 ac=25 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,15,240,12,5,0,[STATUS] f=15     lat=  12ms mode=5 luma=135 clip=1.2% ae=1215 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,15,240,15,5,0,"[VITAL] f=15     lat=  15ms mode=5 HR=74.0 BPM roi_mean=133 ac=22 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,16,256,13,5,0,[STATUS] f=16     lat=  13ms mode=5 luma=136 clip=1.2% ae=1216 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,16,256,15,5,0,"[VITAL] f=16     lat=  15ms mode=5 HR=74.1 BPM roi_mean=132 ac=19 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,17,272,14,5,0,[STATUS] f=17     lat=  14ms mode=5 luma=137 clip=1.2% ae=1217 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,17,272,15,5,0,"[VITAL] f=17     lat=  15ms mode=5 HR=74.2 BPM roi_mean=131 ac=16 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,18,288,15,5,0,[STATUS] f=18     lat=  15ms mode=5 luma=138 clip=1.2% ae=1218 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,18,288,15,5,0,"[VITAL] f=18     lat=  15ms mode=5 HR=74.3 BPM roi_mean=130 ac=13 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,19,304,16,5,0,[STATUS] f=19     lat=  16ms mode=5 luma=139 clip=1.2% ae=1219 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,19,304,15,5,0,"[VITAL] f=19     lat=  15ms mode=5 HR=74.4 BPM roi_mean=130 ac=10 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,20,320,12,5,0,[STATUS] f=20     lat=  12ms mode=5 luma=140 clip=1.2% ae=1220 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,20,320,15,5,0,"[VITAL] f=20     lat=  15ms mode=5 HR=74.5 BPM roi_mean=129 ac=8 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,21,336,13,5,0,[STATUS] f=21     lat=  13ms mode=5 luma=141 clip=1.2% ae=1221 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,21,336,15,5,0,"[VITAL] f=21     lat=  15ms mode=5 HR=74.6 BPM roi_mean=128 ac=6 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,22,352,14,5,0,[STATUS] f=22     lat=  14ms mode=5 luma=142 clip=1.2% ae=1222 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,22,352,15,5,0,"[VITAL] f=22     lat=  15ms mode=5 HR=74.6 BPM roi_mean=127 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,23,368,15,5,0,[STATUS] f=23     lat=  15ms mode=5 luma=143 clip=1.2% ae=1223 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,23,368,15,5,0,"[VITAL] f=23     lat=  15ms mode=5 HR=74.7 BPM roi_mean=127 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,24,384,16,5,0,[STATUS] f=24     lat=  16ms mode=5 luma=144 clip=1.2% ae=1224 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,24,384,15,5,0,"[VITAL] f=24     lat=  15ms mode=5 HR=74.7 BPM roi_mean=126 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,25,400,12,5,0,[STATUS] f=25     lat=  12ms mode=5 luma=145 clip=1.2% ae=1225 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,25,400,15,5,0,"[VITAL] f=25     lat=  15ms mode=5 HR=74.8 BPM roi_mean=125 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,26,416,13,5,0,[STATUS] f=26     lat=  13ms mode=5 luma=146 clip=1.2% ae=1226 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,26,416,15,5,0,"[VITAL] f=26     lat=  15ms mode=5 HR=74.8 BPM roi_mean=125 ac=6 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,27,432,14,5,0,[STATUS] f=27     lat=  14ms mode=5 luma=147 clip=1.2% ae=1227 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,27,432,15,5,0,"[VITAL] f=27     lat=  15ms mode=5 HR=74.9 BPM roi_mean=125 ac=8 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,28,448,15,5,0,[STATUS] f=28     lat=  15ms mode=5 luma=148 clip=1.2% ae=1228 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,28,448,15,5,0,"[VITAL] f=28     lat=  15ms mode=5 HR=74.9 BPM roi_mean=125 ac=10 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,29,464,16,5,0,[STATUS] f=29     lat=  16ms mode=5 luma=149 clip=1.2% ae=1229 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,29,464,15,5,0,"[VITAL] f=29     lat=  15ms mode=5 HR=74.9 BPM roi_mean=125 ac=13 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,30,480,12,5,0,[STATUS] f=30     lat=  12ms mode=5 luma=120 clip=1.2% ae=1230 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,30,480,15,5,0,"[VITAL] f=30     lat=  15ms mode=5 HR=74.9 BPM roi_mean=125 ac=15 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,31,496,13,5,0,[STATUS] f=31     lat=  13ms mode=5 luma=121 clip=1.2% ae=1231 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,31,496,15,5,0,"[VITAL] f=31     lat=  15ms mode=5 HR=74.9 BPM roi_mean=125 ac=18 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,32,512,14,5,0,[STATUS] f=32     lat=  14ms mode=5 luma=122 clip=1.2% ae=1232 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,32,512,15,5,0,"[VITAL] f=32     lat=  15ms mode=5 HR=74.9 BPM roi_mean=126 ac=21 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,33,528,15,5,0,[STATUS] f=33     lat=  15ms mode=5 luma=123 clip=1.2% ae=1233 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,33,528,15,5,0,"[VITAL] f=33     lat=  15ms mode=5 HR=74.9 BPM roi_mean=126 ac=24 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,34,544,16,5,0,[STATUS] f=34     lat=  16ms mode=5 luma=124 clip=1.2% ae=1234 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,34,544,15,5,0,"[VITAL] f=34     lat=  15ms mode=5 HR=74.9 BPM roi_mean=127 ac=27 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,35,560,12,5,0,[STATUS] f=35     lat=  12ms mode=5 luma=125 clip=1.2% ae=1235 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,35,560,15,5,0,"[VITAL] f=35     lat=  15ms mode=5 HR=74.9 BPM roi_mean=128 ac=29 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,36,576,13,5,0,[STATUS] f=36     lat=  13ms mode=5 luma=126 clip=1.2% ae=1236 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,36,576,15,5,0,"[VITAL] f=36     lat=  15ms mode=5 HR=74.9 BPM roi_mean=129 ac=31 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,37,592,14,5,0,[STATUS] f=37     lat=  14ms mode=5 luma=127 clip=1.2% ae=1237 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,37,592,15,5,0,"[VITAL] f=37     lat=  15ms mode=5 HR=74.8 BPM roi_mean=130 ac=33 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,38,608,15,5,0,[STATUS] f=38     lat=  15ms mode=5 luma=128 clip=1.2% ae=1238 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,38,608,15,5,0,"[VITAL] f=38     lat=  15ms mode=5 HR=74.8 BPM roi_mean=130 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,39,624,16,5,0,[STATUS] f=39     lat=  16ms mode=5 luma=129 clip=1.2% ae=1239 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,39,624,15,5,0,"[VITAL] f=39     lat=  15ms mode=5 HR=74.7 BPM roi_mean=131 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,40,640,12,5,0,[STATUS] f=40     lat=  12ms mode=5 luma=130 clip=1.2% ae=1240 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,40,640,15,5,0,"[VITAL] f=40     lat=  15ms mode=5 HR=74.7 BPM roi_mean=132 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,41,656,13,5,0,[STATUS] f=41     lat=  13ms mode=5 luma=131 clip=1.2% ae=1241 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,41,656,15,5,0,"[VITAL] f=41     lat=  15ms mode=5 HR=74.6 BPM roi_mean=133 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,42,672,14,5,0,[STATUS] f=42     lat=  14ms mode=5 luma=132 clip=1.2% ae=1242 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,42,672,15,5,0,"[VITAL] f=42     lat=  15ms mode=5 HR=74.5 BPM roi_mean=133 ac=32 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,43,688,15,5,0,[STATUS] f=43     lat=  15ms mode=5 luma=133 clip=1.2% ae=1243 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,43,688,15,5,0,"[VITAL] f=43     lat=  15ms mode=5 HR=74.5 BPM roi_mean=134 ac=31 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,44,704,16,5,0,[STATUS] f=44     lat=  16ms mode=5 luma=134 clip=1.2% ae=1244 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,44,704,15,5,0,"[VITAL] f=44     lat=  15ms mode=5 HR=74.4 BPM roi_mean=135 ac=28 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,45,720,12,5,0,[STATUS] f=45     lat=  12ms mode=5 luma=135 clip=1.2% ae=1245 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,45,720,15,5,0,"[VITAL] f=45     lat=  15ms mode=5 HR=74.3 BPM roi_mean=135 ac=26 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,46,736,13,5,0,[STATUS] f=46     lat=  13ms mode=5 luma=136 clip=1.2% ae=1246 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,46,736,15,5,0,"[VITAL] f=46     lat=  15ms mode=5 HR=74.2 BPM roi_mean=135 ac=23 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,47,752,14,5,0,[STATUS] f=47     lat=  14ms mode=5 luma=137 clip=1.2% ae=1247 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,47,752,15,5,0,"[VITAL] f=47     lat=  15ms mode=5 HR=74.1 BPM roi_mean=135 ac=20 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,48,768,15,5,0,[STATUS] f=48     lat=  15ms mode=5 luma=138 clip=1.2% ae=1248 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,48,768,15,5,0,"[VITAL] f=48     lat=  15ms mode=5 HR=74.0 BPM roi_mean=135 ac=17 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,49,784,16,5,0,[STATUS] f=49     lat=  16ms mode=5 luma=139 clip=1.2% ae=1249 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,49,784,15,5,0,"[VITAL] f=49     lat=  15ms mode=5 HR=73.9 BPM roi_mean=135 ac=14 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,50,800,12,5,0,[STATUS] f=50     lat=  12ms mode=5 luma=140 clip=1.2% ae=1250 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,50,800,15,5,0,"[VITAL] f=50     lat=  15ms mode=5 HR=73.7 BPM roi_mean=135 ac=11 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,51,816,13,5,0,[STATUS] f=51     lat=  13ms mode=5 luma=141 clip=1.2% ae=1251 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,51,816,15,5,0,"[VITAL] f=51     lat=  15ms mode=5 HR=73.6 BPM roi_mean=134 ac=9 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,52,832,14,5,0,[STATUS] f=52     lat=  14ms mode=5 luma=142 clip=1.2% ae=1252 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,52,832,15,5,0,"[VITAL] f=52     lat=  15ms mode=5 HR=73.5 BPM roi_mean=134 ac=7 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,53,848,15,5,0,[STATUS] f=53     lat=  15ms mode=5 luma=143 clip=1.2% ae=1253 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,53,848,15,5,0,"[VITAL] f=53     lat=  15ms mode=5 HR=73.4 BPM roi_mean=133 ac=6 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,54,864,16,5,0,[STATUS] f=54     lat=  16ms mode=5 luma=144 clip=1.2% ae=1254 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,54,864,15,5,0,"[VITAL] f=54     lat=  15ms mode=5 HR=73.2 BPM roi_mean=132 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,55,880,12,5,0,[STATUS] f=55     lat=  12ms mode=5 luma=145 clip=1.2% ae=1255 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,55,880,15,5,0,"[VITAL] f=55     lat=  15ms mode=5 HR=73.1 BPM roi_mean=131 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,56,896,13,5,0,[STATUS] f=56     lat=  13ms mode=5 luma=146 clip=1.2% ae=1256 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,56,896,15,5,0,"[VITAL] f=56     lat=  15ms mode=5 HR=73.0 BPM roi_mean=130 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,57,912,14,5,0,[STATUS] f=57     lat=  14ms mode=5 luma=147 clip=1.2% ae=1257 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,57,912,15,5,0,"[VITAL] f=57     lat=  15ms mode=5 HR=72.8 BPM roi_mean=130 ac=6 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,58,928,15,5,0,[STATUS] f=58     lat=  15ms mode=5 luma=148 clip=1.2% ae=1258 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,58,928,15,5,0,"[VITAL] f=58     lat=  15ms mode=5 HR=72.7 BPM roi_mean=129 ac=7 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,59,944,16,5,0,[STATUS] f=59     lat=  16ms mode=5 luma=149 clip=1.2% ae=1259 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,59,944,15,5,0,"[VITAL] f=59     lat=  15ms mode=5 HR=72.5 BPM roi_mean=128 ac=9 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,60,960,12,5,0,[STATUS] f=60     lat=  12ms mode=5 luma=120 clip=1.2% ae=1260 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,60,960,15,5,0,"[VITAL] f=60     lat=  15ms mode=5 HR=72.4 BPM roi_mean=127 ac=11 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,61,976,13,5,0,[STATUS] f=61     lat=  13ms mode=5 luma=121 clip=1.2% ae=1261 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,61,976,15,5,0,"[VITAL] f=61     lat=  15ms mode=5 HR=72.2 BPM roi_mean=126 ac=14 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,62,992,14,5,0,[STATUS] f=62     lat=  14ms mode=5 luma=122 clip=1.2% ae=1262 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,62,992,15,5,0,"[VITAL] f=62     lat=  15ms mode=5 HR=72.1 BPM roi_mean=126 ac=17 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,63,1008,15,5,0,[STATUS] f=63     lat=  15ms mode=5 luma=123 clip=1.2% ae=1263 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,63,1008,15,5,0,"[VITAL] f=63     lat=  15ms mode=5 HR=71.9 BPM roi_mean=125 ac=20 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,64,1024,16,5,0,[STATUS] f=64     lat=  16ms mode=5 luma=124 clip=1.2% ae=1264 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,64,1024,15,5,0,"[VITAL] f=64     lat=  15ms mode=5 HR=71.8 BPM roi_mean=125 ac=23 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,65,1040,12,5,0,[STATUS] f=65     lat=  12ms mode=5 luma=125 clip=1.2% ae=1265 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,65,1040,15,5,0,"[VITAL] f=65     lat=  15ms mode=5 HR=71.6 BPM roi_mean=125 ac=26 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,66,1056,13,5,0,[STATUS] f=66     lat=  13ms mode=5 luma=126 clip=1.2% ae=1266 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,66,1056,15,5,0,"[VITAL] f=66     lat=  15ms mode=5 HR=71.5 BPM roi_mean=125 ac=28 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,67,1072,14,5,0,[STATUS] f=67     lat=  14ms mode=5 luma=127 clip=1.2% ae=1267 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,67,1072,15,5,0,"[VITAL] f=67     lat=  15ms mode=5 HR=71.3 BPM roi_mean=125 ac=31 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,68,1088,15,5,0,[STATUS] f=68     lat=  15ms mode=5 luma=128 clip=1.2% ae=1268 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,68,1088,15,5,0,"[VITAL] f=68     lat=  15ms mode=5 HR=71.2 BPM roi_mean=125 ac=32 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,69,1104,16,5,0,[STATUS] f=69     lat=  16ms mode=5 luma=129 clip=1.2% ae=1269 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,69,1104,15,5,0,"[VITAL] f=69     lat=  15ms mode=5 HR=71.0 BPM roi_mean=125 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,70,1120,12,5,0,[STATUS] f=70     lat=  12ms mode=5 luma=130 clip=1.2% ae=1270 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,70,1120,15,5,0,"[VITAL] f=70     lat=  15ms mode=5 HR=70.9 BPM roi_mean=126 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,71,1136,13,5,0,[STATUS] f=71     lat=  13ms mode=5 luma=131 clip=1.2% ae=1271 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,71,1136,15,5,0,"[VITAL] f=71     lat=  15ms mode=5 HR=70.8 BPM roi_mean=126 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,72,1152,14,5,0,[STATUS] f=72     lat=  14ms mode=5 luma=132 clip=1.2% ae=1272 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,72,1152,15,5,0,"[VITAL] f=72     lat=  15ms mode=5 HR=70.6 BPM roi_mean=127 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,73,1168,15,5,0,[STATUS] f=73     lat=  15ms mode=5 luma=133 clip=1.2% ae=1273 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,73,1168,15,5,0,"[VITAL] f=73     lat=  15ms mode=5 HR=70.5 BPM roi_mean=128 ac=33 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,74,1184,16,5,0,[STATUS] f=74     lat=  16ms mode=5 luma=134 clip=1.2% ae=1274 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,74,1184,15,5,0,"[VITAL] f=74     lat=  15ms mode=5 HR=70.4 BPM roi_mean=129 ac=31 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,75,1200,12,5,0,[STATUS] f=75     lat=  12ms mode=5 luma=135 clip=1.2% ae=1275 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,75,1200,15,5,0,"[VITAL] f=75     lat=  15ms mode=5 HR=70.2 BPM roi_mean=130 ac=29 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,76,1216,13,5,0,[STATUS] f=76     lat=  13ms mode=5 luma=136 clip=1.2% ae=1276 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,76,1216,15,5,0,"[VITAL] f=76     lat=  15ms mode=5 HR=70.1 BPM roi_mean=130 ac=27 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,77,1232,14,5,0,[STATUS] f=77     lat=  14ms mode=5 luma=137 clip=1.2% ae=1277 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,77,1232,15,5,0,"[VITAL] f=77     lat=  15ms mode=5 HR=70.0 BPM roi_mean=131 ac=24 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,78,1248,15,5,0,[STATUS] f=78     lat=  15ms mode=5 luma=138 clip=1.2% ae=1278 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,78,1248,15,5,0,"[VITAL] f=78     lat=  15ms mode=5 HR=69.9 BPM roi_mean=132 ac=21 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,79,1264,16,5,0,[STATUS] f=79     lat=  16ms mode=5 luma=139 clip=1.2% ae=1279 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,79,1264,15,5,0,"[VITAL] f=79     lat=  15ms mode=5 HR=69.8 BPM roi_mean=133 ac=18 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,80,1280,12,5,0,[STATUS] f=80     lat=  12ms mode=5 luma=140 clip=1.2% ae=1280 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,80,1280,15,5,0,"[VITAL] f=80     lat=  15ms mode=5 HR=69.7 BPM roi_mean=134 ac=15 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,81,1296,13,5,0,[STATUS] f=81     lat=  13ms mode=5 luma=141 clip=1.2% ae=1281 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,81,1296,15,5,0,"[VITAL] f=81     lat=  15ms mode=5 HR=69.6 BPM roi_mean=134 ac=12 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,82,1312,14,5,0,[STATUS] f=82     lat=  14ms mode=5 luma=142 clip=1.2% ae=1282 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,82,1312,15,5,0,"[VITAL] f=82     lat=  15ms mode=5 HR=69.5 BPM roi_mean=135 ac=10 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,83,1328,15,5,0,[STATUS] f=83     lat=  15ms mode=5 luma=143 clip=1.2% ae=1283 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,83,1328,15,5,0,"[VITAL] f=83     lat=  15ms mode=5 HR=69.4 BPM roi_mean=135 ac=8 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,84,1344,16,5,0,[STATUS] f=84     lat=  16ms mode=5 luma=144 clip=1.2% ae=1284 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,84,1344,15,5,0,"[VITAL] f=84     lat=  15ms mode=5 HR=69.3 BPM roi_mean=135 ac=6 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,85,1360,12,5,0,[STATUS] f=85     lat=  12ms mode=5 luma=145 clip=1.2% ae=1285 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,85,1360,15,5,0,"[VITAL] f=85     lat=  15ms mode=5 HR=69.3 BPM roi_mean=135 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,86,1376,13,5,0,[STATUS] f=86     lat=  13ms mode=5 luma=146 clip=1.2% ae=1286 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,86,1376,15,5,0,"[VITAL] f=86     lat=  15ms mode=5 HR=69.2 BPM roi_mean=135 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,87,1392,14,5,0,[STATUS] f=87     lat=  14ms mode=5 luma=147 clip=1.2% ae=1287 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,87,1392,15,5,0,"[VITAL] f=87     lat=  15ms mode=5 HR=69.1 BPM roi_mean=135 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,88,1408,15,5,0,[STATUS] f=88     lat=  15ms mode=5 luma=148 clip=1.2% ae=1288 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,88,1408,15,5,0,"[VITAL] f=88     lat=  15ms mode=5 HR=69.1 BPM roi_mean=135 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,89,1424,16,5,0,[STATUS] f=89     lat=  16ms mode=5 luma=149 clip=1.2% ae=1289 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,89,1424,15,5,0,"[VITAL] f=89     lat=  15ms mode=5 HR=69.1 BPM roi_mean=134 ac=6 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,90,1440,12,5,0,[STATUS] f=90     lat=  12ms mode=5 luma=120 clip=1.2% ae=1290 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,90,1440,15,5,0,"[VITAL] f=90     lat=  15ms mode=5 HR=69.0 BPM roi_mean=133 ac=8 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,91,1456,13,5,0,[STATUS] f=91     lat=  13ms mode=5 luma=121 clip=1.2% ae=1291 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,91,1456,15,5,0,"[VITAL] f=91     lat=  15ms mode=5 HR=69.0 BPM roi_mean=133 ac=10 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,92,1472,14,5,0,[STATUS] f=92     lat=  14ms mode=5 luma=122 clip=1.2% ae=1292 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,92,1472,15,5,0,"[VITAL] f=92     lat=  15ms mode=5 HR=69.0 BPM roi_mean=132 ac=13 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,93,1488,15,5,0,[STATUS] f=93     lat=  15ms mode=5 luma=123 clip=1.2% ae=1293 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,93,1488,15,5,0,"[VITAL] f=93     lat=  15ms mode=5 HR=69.0 BPM roi_mean=131 ac=16 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,94,1504,16,5,0,[STATUS] f=94     lat=  16ms mode=5 luma=124 clip=1.2% ae=1294 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,94,1504,15,5,0,"[VITAL] f=94     lat=  15ms mode=5 HR=69.0 BPM roi_mean=130 ac=19 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,95,1520,12,5,0,[STATUS] f=95     lat=  12ms mode=5 luma=125 clip=1.2% ae=1295 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,95,1520,15,5,0,"[VITAL] f=95     lat=  15ms mode=5 HR=69.0 BPM roi_mean=130 ac=22 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,96,1536,13,5,0,[STATUS] f=96     lat=  13ms mode=5 luma=126 clip=1.2% ae=1296 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,96,1536,15,5,0,"[VITAL] f=96     lat=  15ms mode=5 HR=69.0 BPM roi_mean=129 ac=25 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,97,1552,14,5,0,[STATUS] f=97     lat=  14ms mode=5 luma=127 clip=1.2% ae=1297 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,97,1552,15,5,0,"[VITAL] f=97     lat=  15ms mode=5 HR=69.0 BPM roi_mean=128 ac=27 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,98,1568,15,5,0,[STATUS] f=98     lat=  15ms mode=5 luma=128 clip=1.2% ae=1298 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,98,1568,15,5,0,"[VITAL] f=98     lat=  15ms mode=5 HR=69.0 BPM roi_mean=127 ac=30 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,99,1584,16,5,0,[STATUS] f=99     lat=  16ms mode=5 luma=129 clip=1.2% ae=1299 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,99,1584,15,5,0,"[VITAL] f=99     lat=  15ms mode=5 HR=69.0 BPM roi_mean=126 ac=32 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,100,1600,12,5,0,[STATUS] f=100    lat=  12ms mode=5 luma=130 clip=1.2% ae=1200 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,100,1600,15,5,0,"[VITAL] f=100    lat=  15ms mode=5 HR=69.1 BPM roi_mean=126 ac=33 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,101,1616,13,5,0,[STATUS] f=101    lat=  13ms mode=5 luma=131 clip=1.2% ae=1201 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,101,1616,15,5,0,"[VITAL] f=101    lat=  15ms mode=5 HR=69.1 BPM roi_mean=125 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,102,1632,14,5,0,[STATUS] f=102    lat=  14ms mode=5 luma=132 clip=1.2% ae=1202 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,102,1632,15,5,0,"[VITAL] f=102    lat=  15ms mode=5 HR=69.2 BPM roi_mean=125 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,103,1648,15,5,0,[STATUS] f=103    lat=  15ms mode=5 luma=133 clip=1.2% ae=1203 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,103,1648,15,5,0,"[VITAL] f=103    lat=  15ms mode=5 HR=69.2 BPM roi_mean=125 ac=34 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,104,1664,16,5,0,[STATUS] f=104    lat=  16ms mode=5 luma=134 clip=1.2% ae=1204 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,104,1664,15,5,0,"[VITAL] f=104    lat=  15ms mode=5 HR=69.3 BPM roi_mean=125 ac=33 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,105,1680,12,5,0,[STATUS] f=105    lat=  12ms mode=5 luma=135 clip=1.2% ae=1205 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,105,1680,15,5,0,"[VITAL] f=105    lat=  15ms mode=5 HR=69.4 BPM roi_mean=125 ac=32 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,106,1696,13,5,0,[STATUS] f=106    lat=  13ms mode=5 luma=136 clip=1.2% ae=1206 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,106,1696,15,5,0,"[VITAL] f=106    lat=  15ms mode=5 HR=69.5 BPM roi_mean=125 ac=30 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,107,1712,14,5,0,[STATUS] f=107    lat=  14ms mode=5 luma=137 clip=1.2% ae=1207 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,107,1712,15,5,0,"[VITAL] f=107    lat=  15ms mode=5 HR=69.5 BPM roi_mean=125 ac=28 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,108,1728,15,5,0,[STATUS] f=108    lat=  15ms mode=5 luma=138 clip=1.2% ae=1208 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,108,1728,15,5,0,"[VITAL] f=108    lat=  15ms mode=5 HR=69.6 BPM roi_mean=126 ac=25 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,109,1744,16,5,0,[STATUS] f=109    lat=  16ms mode=5 luma=139 clip=1.2% ae=1209 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,109,1744,15,5,0,"[VITAL] f=109    lat=  15ms mode=5 HR=69.7 BPM roi_mean=127 ac=22 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,110,1760,12,5,0,[STATUS] f=110    lat=  12ms mode=5 luma=140 clip=1.2% ae=1210 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,110,1760,15,5,0,"[VITAL] f=110    lat=  15ms mode=5 HR=69.8 BPM roi_mean=128 ac=19 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,111,1776,13,5,0,[STATUS] f=111    lat=  13ms mode=5 luma=141 clip=1.2% ae=1211 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,111,1776,15,5,0,"[VITAL] f=111    lat=  15ms mode=5 HR=69.9 BPM roi_mean=128 ac=16 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,112,1792,14,5,0,[STATUS] f=112    lat=  14ms mode=5 luma=142 clip=1.2% ae=1212 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,112,1792,15,5,0,"[VITAL] f=112    lat=  15ms mode=5 HR=70.1 BPM roi_mean=129 ac=14 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,113,1808,15,5,0,[STATUS] f=113    lat=  15ms mode=5 luma=143 clip=1.2% ae=1213 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,113,1808,15,5,0,"[VITAL] f=113    lat=  15ms mode=5 HR=70.2 BPM roi_mean=130 ac=11 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,114,1824,16,5,0,[STATUS] f=114    lat=  16ms mode=5 luma=144 clip=1.2% ae=1214 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,114,1824,15,5,0,"[VITAL] f=114    lat=  15ms mode=5 HR=70.3 BPM roi_mean=130 ac=9 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,115,1840,12,5,0,[STATUS] f=115    lat=  12ms mode=5 luma=145 clip=1.2% ae=1215 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,115,1840,15,5,0,"[VITAL] f=115    lat=  15ms mode=5 HR=70.4 BPM roi_mean=131 ac=7 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,116,1856,13,5,0,[STATUS] f=116    lat=  13ms mode=5 luma=146 clip=1.2% ae=1216 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,116,1856,15,5,0,"[VITAL] f=116    lat=  15ms mode=5 HR=70.6 BPM roi_mean=132 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,117,1872,14,5,0,[STATUS] f=117    lat=  14ms mode=5 luma=147 clip=1.2% ae=1217 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,117,1872,15,5,0,"[VITAL] f=117    lat=  15ms mode=5 HR=70.7 BPM roi_mean=133 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,118,1888,15,5,0,[STATUS] f=118    lat=  15ms mode=5 luma=148 clip=1.2% ae=1218 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,118,1888,15,5,0,"[VITAL] f=118    lat=  15ms mode=5 HR=70.8 BPM roi_mean=134 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,STATUS,119,1904,16,5,0,[STATUS] f=119    lat=  16ms mode=5 luma=149 clip=1.2% ae=1219 ag=80 fps=60.0 drop=0 status=0x1F
+18:39:47,VITAL,119,1904,15,5,0,"[VITAL] f=119    lat=  15ms mode=5 HR=71.0 BPM roi_mean=134 ac=5 q=3 roi=(100,80)-(300,260)"
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,1,0,3,5,0,[IMAGE] f=1      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:47,IMAGE,2,0,3,5,0,[IMAGE] f=2      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 
+18:39:48,IMAGE,3,0,3,5,0,[IMAGE] f=3      lat=   3ms mode=5 

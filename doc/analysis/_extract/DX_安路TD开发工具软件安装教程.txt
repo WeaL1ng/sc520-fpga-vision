@@ -1,0 +1,16 @@
+########## FILE: 安路TD开发工具软件安装教程.docx ##########
+安路TD开发工具软件安装教程
+[[IMAGE]]1、TD软件安装
+双击运行
+[[IMAGE]]
+选择安装路径:
+[[IMAGE]]
+[[IMAGE]]
+[[IMAGE]]
+[[IMAGE]]
+完成安装
+安装license
+复制license到安装路径下，在提供的文件夹里”license”复制到如下的安装目录下。
+[[IMAGE]]
+[[IMAGE]]
+Win11 不建议进BIOS  建议采用临时禁用驱动签名的方法

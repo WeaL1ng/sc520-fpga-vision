@@ -1,0 +1,73 @@
+# ============================================================
+#  .gitignore —— 只跟踪"人和工具写的东西"，不跟踪可重建的产物
+#
+#  仓库里同时存在"完整工作副本"和"版本控制"两件事：
+#    · 工作目录是完整的（含 TD 的 Runs、ModelSim 已编译库、厂商例程 zip）
+#    · 但这些东西体积大且可重建，不进版本控制
+#  真正要提交的是：RTL、工程文件(.al/.sdc/.prj)、约束、TB、脚本、文档、位流。
+# ============================================================
+
+# ---------------- TD（Tang Dynasty）综合 / 布线产物 ----------------
+# Runs 下只有 .prj（文件清单，文本）值得留，db / 日志 / 网表都可重建
+**/camera_to_dsi_display_Runs/syn_1/*
+!**/camera_to_dsi_display_Runs/syn_1/*.prj
+**/camera_to_dsi_display_Runs/phy_1/*
+!**/camera_to_dsi_display_Runs/phy_1/*.prj
+**/camera_to_dsi_display_Runs/best_result/
+**/camera_to_dsi_display_Runs/.temp*
+
+**/*.db
+**/*.db_journal
+**/*.log
+**/*.logw
+**/*.raw
+**/*.timingsummary
+**/*.status
+**/*.cfg.bak
+**/cw/
+**/chip_debugger/
+**/td_project/log/
+**/al_ip/
+
+# ---------------- ModelSim 工作区 / 已编译库 ----------------
+# 库可用 sim/build_libs_vlog.ps1 重建（约 25 秒）
+**/sim/libs/
+**/work/
+**/voptmod/
+**/vopt/
+**/ccheck/
+**/*.wlf
+**/transcript
+**/vsim.wlf
+**/*.vstf
+**/modelsim.ini.lock
+
+# ---------------- 大体积二进制 ----------------
+# 厂商例程压缩包（单个 45 MB，工作目录保留，不进库）
+**/*.zip
+**/*.7z
+**/*.rar
+**/*.mp4
+**/*.iso
+**/*.exe
+**/*.msi
+**/*.dll
+
+# ---------------- 临时 / 本地文件 ----------------
+**/Thumbs.db
+**/desktop.ini
+**/.DS_Store
+**/*.bak
+**/*.tmp
+**/*.swp
+**/.vscode/
+**/.idea/
+**/__pycache__/
+**/*.pyc
+
+# 注意：bitstream/*.bit 必须保留 —— 不要加 `*.bit`
+
+# ---------------- 厂商 PDF 不入公开库 ----------------
+# 思特威数据手册/应用指南标注 "Company Confidential"，公开仓库不再分发；
+# 文件仍留在工作目录里，需要的人向厂商或 FAE 索取。
+**/*.pdf

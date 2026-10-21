@@ -1,0 +1,265 @@
+########## FILE: lab_ex_5.docx ##########
+设计参考例程5
+基于安路FPGA实现
+HDMI与音频输出
+开发板型号：HX4S20C
+主芯片（FPGA）：    EG4S20
+2026-06
+目录
+	目录	II
+	1概述	1
+	2功能与原理	2
+		2.1  HDMI 1.4b 音频输出原理	2
+		2.2系统架构与时钟结构	3
+	3模块接口	4
+		3.1顶层模块	4
+		3.2 SD卡模块	4
+		3.2.1 SD卡顶层模块	4
+		3.2.2 BMP读取模块	5
+		3.3 HDMI模块	6
+		3.3.1 video_timing_data模块	6
+		3.3.2 video_rgb_to_axis 模块	6
+		3.3.3 hdmi_1_4b_transmitter_core_wrapper 模块	6
+		3.3.4 hdmi_phy_wrapper  模块	7
+		3.4 FIFO控制器模块	7
+		3.5 SDRAM模块	8
+		3.6 HDMI 音频模块	8
+		3.6.1 hdmi_audio_tone_i2s_64fs模块	8
+		3.6.2 I2S_receiver 模块	9
+		3.6.3 audio_arc_calculate模块	9
+	4 实验步骤	10
+		4.1 连接	10
+		4.2 调试操作	10
+		4.2 实验操作	11
+1	概述
+使用 FPGA 开发板循环读取 SD 卡中存储的两张图片（BMP 格式图片，分辨率为640*480），然后将图片存储在 SDRAM 中并通过HDMI 接口在显示器上切换显示。按下KEY2开始读取SD卡中的一张图片，再次按下会继续搜索下一张图片，按下KEY4触发自动轮播，能够自动播放下一张图片。同时输出 HDMI 音频测试音（由连接在 HDMI_B 接口的显示设备播放）。图1为本例程的系统示意图。
+图 1 系统示意图
+2	功能与原理
+2.1  HDMI 1.4b 音频输出原理
+HDMI 是新一代的多媒体接口标准，它能够同时传输视频和音频，简化系统连线与接口资源；在本工程中，FPGA 在输出 640×480@60Hz 视频的同时，同步嵌入 48 kHz 立体声音频流。
+如图 6 所示，本例程音频通路为：PLL_HDMI_AUDIO 产生音频主时钟 audio_mclk，hdmi_audio_tone_i2s_64fs 在 FPGA 内部生成 I2S（Inter-IC Sound）测试音；I2S_receiver 将 I2S 串行数据解串为左右声道 24-bit PCM（Pulse Code Modulation）音频样本，并输出样本有效信号 audio_valid；audio_arc_calculate 计算 ACR（Audio Clock Regeneration，音频时钟重建）包所需的 CTS/N 参数。随后，音频样本与 ACR 参数一起送入 APUG092 HDMI 1.4b Transmitter IP（hdmi_1_4b_transmitter_core_wrapper），由 IP 核在视频消隐期间通过数据岛包（Data Island Packets）完成音频组包，与视频数据复用后进行 TMDS 编码输出。
+接收端（显示器/电视）利用 TMDS 时钟与 ACR 参数恢复音频采样时钟，从而稳定解出 48 kHz 音频并进行播放。本工程使用 48 kHz 常用 N 值（N=6144），CTS 由 audio_arc_calculate 动态计算以匹配当前 TMDS 时钟。
+图 2  HDMI 1.4b 音频输出原理框图
+2.2系统架构与时钟结构
+[[IMAGE]]
+图3系统架构图
+系统架构如图3所示，其中50Mhz为输入时钟，100Mhz和125Mhz为输入时钟通过PLL1生成的时钟，HDMI时钟为PLL2生成的时钟，12.288MHz音频主时钟为PLL3生成。由于SDRAM需要一个反相时钟进行校准，所以PLL1还会生成一个125M_sft的180相位时钟。数码管直接通过SD卡模块提供的状态码进行显示，可以提供调试信息。图像数据在不同时钟域中需要通过FIFO进行跨时钟域传输。
+3	模块接口
+3.1顶层模块
+顶层端口信号如表1所示。
+表 1 顶层模块信号表
+--- TABLE ---
+信号名 | Bits | 方向 | 功能描述
+clk | 1 | Input | 板卡输入时钟50MHz。
+rst_n | 1 | Input | 复位信号。
+key1 | 1 | Input | 手动切换下一张 BMP。
+key2 | 1 | Input | 自动轮播开/关。
+seg_sel | 6 | Output | 数码管片选。
+seg_data | 8 | Output | 数码管段选。
+HDMI_CLK_P | 1 | Output | HDMI时钟差分+。
+HDMI_D2_P | 1 | Output | HDMI数据通道2差分+。
+HDMI_D1_P | 1 | Output | HDMI数据通道1差分+。
+HDMI_D0_P | 12 | Output | HDMI数据通道0差分+。
+HDMI_DDC_SCL | 1 | Output | HDMI DDC I2C 时钟。
+HDMI_DDC_SDA | 1 | Inout | HDMI DDC I2C 数据。
+sd_ncs | 1 | Output | SD卡SPI片选信号。
+sd_dclk | 1 | Output | SD卡SPI时钟信号。
+sd_mosi | 1 | Output | SD卡主发从收。
+sd_miso | 1 | Input | SD卡主收从发。
+--- /TABLE ---
+3.2 SD卡模块
+3.2.1 SD卡顶层模块
+SD卡顶层端口的信号如表2所示。如果需要修改分辨率，请将SD卡内的文件分辨率和SD卡的图像宽度参数进行变更。
+表2 SD卡顶层模块信号表
+--- TABLE ---
+信号名 | Bits | 方向 | 功能描述
+clk | 1 | Input | SD卡系统时钟，100Mhz。
+rst | 1 | Input | 复位信号，高电平有效。
+key_next | 1 | Input | 手动下一张（接 key1）。
+key_auto | 1 | Input | 自动轮播开关（接 key2）。
+state_code | 4 | Output | SD卡状态指示。
+bmp_width | 16 | Input | BMP文件图像宽度，默认640。
+bmp_height | 16 | Input | BMP 图像高度，默认 480。
+display_valid | 1 | Output | 首图提交有效，高后允许显示。
+write_finish_toggle | 1 | Input | 写帧完成翻转信号。
+write_buf_idx | 2 | Output | 当前写入缓冲索引。
+disp_buf_idx | 2 | Output | 当前显示缓冲索引。
+write_req | 1 | Output | SD卡模块与SDRAM的FIFO控制器间的握手信号，用于发起写SDRAM请求。
+write_req_ack | 1 | Input | SD卡模块与SDRAM的FIFO控制器间的握手回应信号，用于回应可以开始数据传输，此时FIFO控制器开启写事务。 握手后需将write_req拉低。
+write_en | 1 | Output | SDRAM的写FIFO的写使能。
+write_data | 32 | Output | SDRAM的写FIFO的写数据。
+SD_nCS | 1 | Output | SD卡SPI片选信号。
+SD_DCLK | 1 | Output | SD卡SPI时钟信号。
+SD_MOSI | 1 | Output | SD卡主发从收。
+SD_MISO | 1 | Input | SD卡主收从发。
+--- /TABLE ---
+3.2.2 BMP读取模块
+BMP读取模块的信号如表3所示。
+表3 SD卡顶层模块信号表
+--- TABLE ---
+信号名 | Bits | 方向 | 功能描述
+clk | 1 | Input | SD卡系统时钟，100Mhz。
+rst | 1 | Input | 复位信号，高电平有效。
+ready | 1 | Output | 处于空闲状态（无用）。
+find | 1 | Input | 触发信号，开始搜索BMP。
+sd_init_done | 1 | Input | SD卡初始化完成。
+state_code | 4 | Output | 调试用状态码。
+bmp_width | 16 | Input | 参数，图片宽度。
+write_req | 1 | Output | SD卡模块与SDRAM的FIFO控制器间的握手信号，用于发起写SDRAM请求。
+write_req_ack | 1 | Input | SD卡模块与SDRAM的FIFO控制器间的握手回应信号，用于回应可以开始数据传输，此时FIFO控制器开启写事务。握手后需将write_req拉低。
+sd_sec_read | 1 | Output | SD卡读指令使能。
+sd_sec_read_addr | 32 | Output | SD卡读指令地址。
+sd_sec_read_data | 8 | Input | SD卡读数据。
+sd_sec_read_data_valid | 1 | Input | SD卡读数据有效。
+sd_sec_read_end | 1 | Input | 扇区读取结束标志。
+bmp_data_wr_en | 1 | Output | SDRAM的写FIFO的写使能。
+bmp_data | 24 | Output | 颜色数据，低位填充8’h00后写入到SDRAM中。
+--- /TABLE ---
+3.3 HDMI模块
+3.3.1 video_timing_data模块
+video_timing_data模块用于生成VGA的行同步和场同步信号，并输出数据有效信号。然后同步信号、数据有效信号到video_delay中进行同步并延迟21个时钟。SDRAM的读FIFO的读使能信号read_en来源于数据有效信号，读取到的颜色数据也会在video_delay中进行同步。如果需要修改分辨率大小，则VGA时序也会随之改变，本模块内置宏定义支持VGA时序的变更，可以查看color_bar.v和video_define.v文件，修改video_define.v的宏定义可以对VGA时序进行配置，时钟频率请自行在PLL中进行过更改。
+表4 video_timing_data模块信号表
+--- TABLE ---
+信号名 | Bits | 方向 | 功能描述
+video_clk | 1 | Input | 像素时钟，640*480分辨率下为25Mhz。
+rst | 1 | Input | 复位信号。
+read_req | 1 | Output | VGA与SDRAM的FIFO控制器间的握手信号，用于发起读SDRAM请求。
+read_req_ack | 1 | Input | VGA与SDRAM的FIFO控制器间的握手回应信号，用于回应数据开始传输，此时FIFO控制器开启写事务。 握手后需将read_req拉低。
+hs | 1 | Output | VGA行同步信号。
+vs | 1 | Output | VGA场同步信号。
+de | 1 | Output | 数据有效信号。
+--- /TABLE ---
+3.3.2 video_rgb_to_axis 模块
+video_rgb_to_axis_640x480模块将 video_delay 输出的 RGB888像素数据 及 DE/VS信号打包为 AXI-Stream 视频流，供后续模块输出。
+表5 video_rgb_to_axis模块信号表
+--- TABLE ---
+信号名 | Bits | 方向 | 功能描述
+I_clk | 1 | Input | 像素时钟，640*480分辨率下为25Mhz。
+I_rst | 1 | Input | 复位信号。
+I_vs / I_de | 1 | Input | 场同步 / 数据有效信号。
+I_rgb | 24 | Input | RGB 像素数据。
+O_video_user/valid/last | 1 | Output | AXIS 帧起始 / 数据有效 / 行结束信号。
+O_video_data | 24 | Output | AXIS 视频数据。
+--- /TABLE ---
+3.3.3 hdmi_1_4b_transmitter_core_wrapper 模块
+hdmi_1_4b_transmitter_core_wrapper 模块完成 EDID 读取、视频/音频包组包及 TMDS 10 bit 编码输出的功能。
+表6 hdmi_1_4b_transmitter_core_wrapper模块信号表
+--- TABLE ---
+信号名 | Bits | 方向 | 功能描述
+I_pixel_clk | 1 | Input | 像素时钟，640*480分辨率下为25Mhz。
+I_rst | 1 | Input | 复位信号。
+I_edid_read_trig | 1 | Input | EDID 读取触发标志位。
+I_axis_s_* | — | Input | 视频 AXI-Stream 从接口。
+I_audio_valid | 1 | Input | 音频样本有效标志位。
+I_audio_left/right_data | 24 | Input | 左右声道 PCM数据。
+I_acr_valid/cts/n | — | Input | ACR 包参数。
+O_ddc_scl / IO_ddc_sda | — | Output/Inout | HDMI DDC I2C 时钟/数据。
+O_ch0/1/2/clk_tmds_data | 10 | Output | TMDS 10 bit 通道数据。
+--- /TABLE ---
+3.3.4 hdmi_phy_wrapper  模块
+hdmi_phy_wrapper 将 TMDS 10 bit 并行数据在 hdmi_5x_clk 域串行化，输出 HDMI 四路 LVDS 差分信号。
+表7 hdmi_phy_wrapper模块信号表
+--- TABLE ---
+信号名 | Bits | 方向 | 功能描述
+I_pixel_clk | 1 | Input | 像素时钟，640*480分辨率下为25Mhz。
+I_serial_clk | 1 | Input | 串行时钟，频率为像素时钟的五倍。
+I_tmds_channel_* | 10 | Input | TMDS 编码数据。
+O_tmds_ch0/1/2/clk_p | 1 | Output | HDMI 差分正端信号。
+--- /TABLE ---
+3.4 FIFO控制器模块
+frame_read_write模块中包含一个读FIFO和一个写FIFO，以及对应的控制逻辑。主要接口包含读器件接口、写器件接口、SDRAM接口等，信号如表8所示。一次读/写事务在完成握手后需在完成读/写事务长度后结束；或者发起一次新的请求，会将上一次事务终止并清空FIFO。每次读/写事务包含多次传输，每次传输通过突发传输来进行。
+此外虽然读和写事务可以同时进行，但由于板卡SDRAM读写互斥（参考SDRAM IP手册），故读事务和写事务突发同时只会进行一个，且写事务优先于读事务，互斥逻辑可参考frame_read_write内部的O_wr_busy和O_rd_busy信号。
+如果需要修改分辨率（图像大小），那么read_len和write_len也注意修改。
+表8 frame_read_write模块信号表
+--- TABLE ---
+信号名 | Bits | 方向 | 功能描述
+mem_clk | 1 | Input | 系统时钟，同SDRAM时钟，125Mhz。
+rst | 1 | Input | 复位信号。
+Sdr_init_done | 1 | Input | SDRAM初始化完成，高电平有效。
+Sdr_init_ref_vld | 1 | Input | SDRAM初始自刷新有效标志，初始拉高，之后拉低。
+Sdr_busy | 1 | Input | SDRAM忙标志，发送指令后拉高（无用）。
+App_rd_en | 1 | Output | SDRAM用户读使能。
+App_rd_addr | 21 | Output | SDRAM用户读指令地址。
+Sdr_rd_en | 1 | Input | SDRAM用户读数据有效。对应读FIFO的写使能。
+Sdr_rd_dout | 32 | Input | SDRAM用户读数据。对应读FIFO的写数据。
+read_clk | 1 | Input | 读FIFO时钟。
+read_req | 1 | Input | 读事务握手信号。
+read_req_ack | 1 | Output | 读事务握手回应。
+read_finish | 1 | Output | 读事务结束标志。
+read_addr_x | 21 | Input | 读事务起始地址，可设置4个起始地址，用于乒乓操作。
+read_addr_index | 2 | Input | 读事务起始地址选择。
+read_len | 21 | Input | 读事务长度。
+read_en | 1 | Input | 读FIFO的读使能。
+read_data | 32 | Output | 读FIFO的读数据。
+App_wr_en | 1 | Output | SDRAM用户写使能。对应写FIFO的读使能。
+App_wr_addr | 21 | Output | SDRAM用户写地址。
+App_wr_din | 32 | Output | SDRAM用户写数据。对应写FIFO的读数据。
+App_wr_dm | 4 | Output | SDRAM用户写数据掩码。
+write_clk | 1 | Input | 写FIFO时钟。
+write_req | 1 | Input | 写事务握手信号。
+write_req_ack | 1 | Output | 写事务握手回应。
+write_finish | 1 | Output | 写事务结束标志。
+write_addr_x | 21 | Input | 写事务起始地址，可设置4个起始地址，用于乒乓操作。
+write_addr_index | 2 | Input | 写事务起始地址选择。
+write_len | 21 | Input | 写事务长度。
+write_en | 1 | Input | 写FIFO的写使能。
+write_data | 32 | Input | 写FIFO的写数据。
+--- /TABLE ---
+3.5 SDRAM模块
+SDRAM模块具体内容请参考SDRAM IP手册。
+3.6 HDMI 音频模块
+本例程的音频链路由 I2S 测试音生成、I2S 接收解串、ACR 参数计算三部分组成，并与视频数据在 hdmi_1_4b_transmitter_core_wrapper模块内合流后输出至 HDMI接口。
+3.6.1 hdmi_audio_tone_i2s_64fs模块
+该模块在音频主时钟audio_mclk域生成I2S（BCLK/LRCK/DOUT）信号，并输出内部测试音的 I2S 串行数据流。
+表9 hdmi_audio_tone_i2s_64fs模块信号表
+--- TABLE ---
+信号名 | Bits | 方向 | 功能描述
+I_mclk | 1 | Input | 音频主时钟，频率为12.288 MHz。
+I_rst | 1 | Input | 复位信号。
+O_i2s_BCLK | 1 | Output | I2S 串行位时钟。
+O_i2s_LRCK | 1 | Output | I2S 左右声道时钟。
+O_i2s_DOUT | 1 | Output | I2S 串行数据输出。
+--- /TABLE ---
+3.6.2 I2S_receiver 模块
+I2S_receiver 模块在 video_clk 域对 I2S 信号进行同步与解串，输出 24-bit 左右声道 PCM 数据，并给出 audio_valid 有效指示。
+表10 I2S_receiver 模块信号表
+--- TABLE ---
+信号名 | Bits | 方向 | 功能描述
+I_clk | 1 | Input | 模块工作时钟，同video_clk。
+I_rst | 1 | Input | 复位信号。
+I_i2s_BCLK | 1 | Input | I2S 串行位时钟。
+I_i2s_LRCK | 1 | Input | I2S 左右声道时钟。
+I_i2s_DOUT | 1 | Input | I2S 串行数据。
+O_audio_valid | 1 | Output | 音频样本有效标志。
+O_audio_left_data | 24 | Output | 左声道 PCM 数据。
+O_audio_right_data | 24 | Output | 右声道 PCM 数据。
+--- /TABLE ---
+3.6.3 audio_arc_calculate模块
+audio_arc_calculate 模块根据 audio_valid 统计音频采样节拍，计算 HDMI ACR（Audio Clock Regeneration）包所需的 CTS/N 参数（本例程 N=6144），用于接收端从 TMDS 时钟恢复音频采样时钟。
+表11 audio_arc_calculate 模块信号表
+--- TABLE ---
+信号名 | Bits | 方向 | 功能描述
+I_clk | 1 | Input | 模块工作时钟，同video_clk。
+I_rst | 1 | Input | 复位信号。
+I_audio_valid | 1 | Input | 音频样本有效标志。
+O_acr_valid | 1 | Output | ACR 参数有效标志。
+O_acr_cts | 20 | Output | ACR CTS 参数。
+O_acr_n | 20 | Output | ACR N 参数（固定为 6144）。
+--- /TABLE ---
+实验步骤
+4.1 连接
+将开发板与上位机通过下载线相连；HDMI 线接开发板 HDMI_B 接口再连接显示器。使用 FAT32 格式化 TF 卡，将符合要求的 640×480、24-bit RGB 非压缩 BMP 文件放入卡中（工程示例图片见 doc/TF卡图片，可复制使用），插入开发板 TF 卡槽。本例程最多支持读取四张图片。
+4.2 调试操作
+这里给出对SD卡及其中BMP文件的地址和内容进行检查的一些操作展示。
+如图6，给出使用磁盘查看工具（如winhex）对SD卡存储内容进行检查，可以看到目标BMP图片的地址从16,640开始，检查查看BMP读取模块内搜索地址内是否包含目标文件。此外，下方可以看到文件内容，可以检查图片是否为标准RGB24位图格式，文件头长度为54bytes。
+[[IMAGE]]
+图4 Winhex查看SD卡内容
+4.2 实验操作
+推荐在放入图片前使用工程 docconvert/ 目录下的 sync_to_sd.py 脚本来处理图片和 SD 卡同步，该脚本会清除 SD 卡物理扇区上的旧图片特征。
+程序下载完成后，如图7所示，数码管应显示‘1’。在按下KEY2后，数码管显示内容从‘1’跳转到‘2’，‘3’（3状态很短，几乎看不到，如果显示卡在3状态，说明握手出现问题），‘4’，然后回到‘1’，此时完成了一张图片的读写，显示设备可以看到存储的第一张图片。如果数码管显示为‘0’，请检查是否插入SD卡。
+[[IMAGE]]
+图5 开发板连线与数码管显示
+再次按下KEY2可以继续扫描下一张BMP图片，如果需要从头重新开始扫描，请先按下KEY1进行复位。按下KEY4则可以触发自动轮播的功能。
+上电后系统自动扫描 TF 卡内 BMP；首图加载完成后 HDMI 显示第一张图片，同时可听到测试音。
+[[IMAGE]]
+图6 图片显示示例

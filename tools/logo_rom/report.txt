@@ -1,0 +1,28 @@
+源文件              : rtl_vendor\anlogic_example\lab_ex3_osd_SC500_720P\lab_ex3_osd\user_source\hdl_source\anlogic_logo_rom.v
+case 项数           : 6387
+推断原图宽度        : 160
+包围盒 x0,y0,w,h    : 7,34,146,94
+ROM depth/abits     : 13724 / 14
+索引位宽            : 8
+唯一 RGB 颜色       : 579
+调色板色数          : 255
+是否量化            : 是
+量化误差 最大/平均  : 3 / 0.08  (每通道, 满量程 255)
+ROM 位总数          : 109792 bit
+预计 ERAM 块(像素)  : 6
+调色板 LUT 估算     : 96
+
+--- 面积收益：待实测，不要预设（2026-09-18 第三轮核验更正）---
+早期版本此处写 '改造前 ≈2,495 个 LUT6 / 净收益 ≈-2399 LUT6'，
+该 2,495 是从位密度反推的估算，不是 TD 报告值，已作废。
+各口径真实报告值：
+  RTL 级   : anlogic_logo_rom = 38,479 个 gate（非 LUT）
+  gate 级  : 该模块已从层级表消失（被吸收）
+  布线后   : u_hdmi_mixer 整模块 2,572 LUT，其中 u_anlogic_logo_rom 单列 54 LUT
+  可信差分 : u_hdmi_mixer 46 -> 2,572 LUT（lab1->lab3，+2,526）
+             全设计 slices 12,358 -> 14,852（+2,494）
+  但 2,526 LUT 中 Logo / 手写字库 / 像素率常量除法各占多少，TD 报告分不出来。
+
+主收益是时序：HDMI_PIXEL_CLK 改前仅 0.103 ns，目标 >= 1.5 ns。
+确定的附带收益：DSP 9 -> 8（常量乘 146 移除）、ERAM +6 -> 46/108。
+依据：doc/analysis/核验与纠偏-2026-09-18第三轮.md §2、§10
