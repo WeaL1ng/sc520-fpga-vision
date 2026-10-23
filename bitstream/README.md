@@ -1,7 +1,8 @@
 # 位流与构建报告
 
-> **状态：板测通过（2026-10-22）** —— 图像、模式切换、目标检测、OSD、AE 均正常。
-> **但时序仍有违例**（−2.220 ns），是"功能优先"下的验证版，不是零违例的交付版。
+> **状态：已固化进 SPI-Flash，上电自动运行（2026-10-23）**
+> 时序：**全局 SWNS −0.010 ns、仅 1 个违例端点**（Hold 余量 +0.020 ns），实质收敛。
+> 板测：图像 / 卡通 / 目标检测 / 运动检测 / AE 全部正常。
 
 ## 文件
 
@@ -17,74 +18,86 @@
 SHA256（`.bit`）：
 
 ```
-47B42CF119B81EC62A68F2DF4E4D158346049DB4B3763ED7BCADBC5362D5AB9F
+574259FC2F36B714DF7F390C1EA36E0342F96D152F955E160D31CA81B8C7C34D
 ```
 
 > TD 的 bitgen 会往文件头写构建日期，所以**同样的 RTL 重新构建出的 SHA 会变**。
 > 判断"内容是否等价"要比对头部 `Global CRC` 行；RTL 不变时该值一致。
+
+## 资源与时序（2026-10-23 21:02 构建）
+
+| 资源 | 已用 | 总量 | 占用 |
+|---|---|---|---|
+| Slice | 15,892 | 21,216 | 74.91% |
+| LUT6 | 13,825 | 21,216 | 65.16% |
+| 寄存器 | 15,262 | 42,432 | 35.97% |
+| ERAM | 55 | 108 | 50.93% |
+| DSP | 8 / 40（全部来自厂商 AWB） | 40 | 20.00% |
+
+| 时钟域 | 约束 | 实测 Fmax | 余量 |
+|---|---|---|---|
+| `MIPI_RX_BYTE_CLK` | 103.52 MHz（9.66 ns） | **103.413 MHz** | **−0.010 ns**（1 个端点） |
+| `usr_clk`（DDR） | 66.667 MHz | 81.833 MHz | +22.7% |
+| `HDMI_PIXEL_CLK` | 75.002 MHz | 75.855 MHz | +1.1% |
+| `HDMI_SERIAL_CLK` | 375.094 MHz | 697.350 MHz | +85.9% |
+| Hold | — | **HWNS +0.020 ns** | 无违例 |
 
 ## 复现
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\build_fpga.ps1
 python tools\verify_td_reports.py
+python tools\_timing_classify.py <pr.timing 路径>   # 按模块归类违例路径
 ```
 
-## 时序现状（本版仍然违例）
+## 固化（上电即运行，赛题硬性要求）
 
-| 时钟域 | 约束 | 实测 Fmax | 状态 |
-|---|---|---|---|
-| `MIPI_RX_BYTE_CLK` | 9.660 ns（103.5 MHz） | **84.175 MHz** | ❌ 差 2.2 ns |
-| `usr_clk`（DDR） | 15.000 ns（66.67 MHz） | 92.285 MHz | ✅ |
-| `HDMI_PIXEL_CLK` | 13.333 ns（75 MHz） | 76.051 MHz | ⚠️ 余量 1.4% |
-| `pll_clk_24m` | 42.0 ns（23.81 MHz） | 64.754 MHz | ✅ |
+本工程已用 BitWriter 的 SPI-Flash 编程模式烧写：
 
-- 全局 **SWNS −2.220 ns**，**156 个违例端点**
-- 最差路径集中在 `u_awb → u_target_detect_96` 与 `u_awb → u_luma_stats`
-  （12.4 ns / 14~16 级、ADDER 多），属**逻辑深度型**
-- 已对这三处（另加 `motion_detect` 输入）各加了一级流水：497 → 156 个端点，Fmax 78.976 → 84.175 MHz；
-  再往下加流水**边际收益归零甚至倒退**（85.1 → 84.2），瓶颈已变成布线拥塞（net 占 35~38%）
+```powershell
+# 在 td_project 目录下
+F:\al\bin\bw_commands_prompt.exe bw_spi_v4.tcl
+# 其中：download -bit ... -mode program_spi -v -spd 7 -cable 0 -flashsize 128
+```
 
-**根因**：SC520CS 的 720p60 把 MIPI 跑在 828 Mbps/Lane（SC500CS 是 480），
-字节时钟 60 → 103.5 MHz，同一套 ISP 逻辑的时间预算从 16.67 ns 压到 9.66 ns。
+日志确认：`SPI Flash ID is: c8`（GigaDevice，128 Mbit）→ `Programming SPI Flash QE to enable
+quad mode`（与 `.al` 的 `boot_mode = mspix4` 匹配）→ `sector erase` → `Page program and verify`。
+
+> ⚠️ 经验：如果 BitWriter 的 GUI 窗口还开着（`bw` 进程残留），CLI 再烧 Flash 会卡在
+> `Page program and verify` 不动。**烧之前先关掉 GUI、确认没有残留 `bw` 进程。**
 
 ## 版本演进（含一次失败尝试，保留记录以免重蹈）
 
 | 版本 | 改动 | 时序 | 上板结果 |
 |---|---|---|---|
-| **v1** `05DD502A` | SC500 → SC520CS 全套配置移植 | SWNS **−3.002 ns** / 497 端点 | ✅ 图像与功能正常 |
-| **v2** `EAD7CAB2` | ISP 时钟域迁到 `usr_clk` 66.67 MHz，MIPI 与 ISP 间加双时钟异步 FIFO | SWNS **+1.062 ns** / **0 端点** | ❌ **满屏花屏** |
-| **v3** `47B42CF1` | 回退 v2；保留三处输入流水 + 停用 LATENCY | SWNS **−2.220 ns** / 156 端点 | ✅ **图像与功能正常** |
+| **v1** `05DD502A` | SC500 → SC520CS 全套配置移植 | SWNS **−3.002 ns** / 497 端点 | ✅ 功能正常 |
+| **v2** `EAD7CAB2` | ISP 时钟域迁到 `usr_clk` 66.67 MHz + 双时钟异步 FIFO | SWNS **+1.062 ns** / **0 端点** | ❌ **满屏花屏** |
+| **v3** `47B42CF1` | 回退 v2；保留三处输入流水 + 停用 LATENCY | SWNS **−2.220 ns** / 156 端点 | ✅ 功能正常 |
+| **v4** `574259FC` | 给 AWB 的 5 个消费者各加本地输入寄存器（**拆分扇出**） | SWNS **−0.010 ns** / **1 端点** | ✅ 功能正常，**已固化** |
 
 ### v2 为什么失败（未完全定位，供后来者参考）
 
-v2 是唯一让时序收敛（零违例）的方案，但上板满屏花屏。已排除的原因：
+v2 是唯一"靠换时钟域"让时序收敛的方案，但上板满屏花屏。已排除：FIFO 读协议与 IP 规范一致、
+按行突发估算不会溢出、TD 报告零违例、传感器配置与 v1 相同。怀疑跨域后帧相位与 `video_in`
+内部 FIFO 复位脉冲的关系改变。**结论：功能优先，不可用功能换余量。**
 
-- **FIFO 读协议**：与 IP 规范一致 —— `soft_fifo_al` 的 `valid = re_r1 & !empty_r1`
-  （`soft_fifo_al_4057d6b76aa6.v` 第 185~197 行），读侧也按此把 `tvalid` 打了一拍；
-- **吞吐**：按行突发估算，FIFO 峰值占用约 114 字 ≪ 512 深；
-- **时序**：TD 报告零违例；
-- **传感器配置**：v1 与 v2 用的是同一套 `uics520_cfg`，v1 图像正常。
+### v4 是怎么做到的（关键经验）
 
-怀疑方向（未验证）：跨域后帧相位与 `video_in` 内部 FIFO 的复位脉冲（`S_fifo_rst`）关系改变，
-或 AWB 内部 `w155` FIFO 的突发吞吐边界。
+v3 的 156 个违例端点全部落在 `u_awb → 各分支` 这一段。把它们按起点/终点归类后发现：
+**net（布线）占最差路径的 35~38%**，而逻辑级数只有 10~15 ⇒ 瓶颈不是逻辑深度，是**扇出**：
+AWB 的一个输出寄存器同时驱动 5 个消费者（灰度 / 卡通 / 目标检测 / 运动检测 / 亮度统计）。
 
-**结论**：功能优先。v1/v3 在 −2~−3 ns 违例下能稳定出图，说明本设计对时序余量不敏感；
-把违例如实写进报告，而不是拿功能去换余量。**若将来重试时钟域迁移，必须先在板子上验证
-视频不失真，再谈时序收益。**
+修法不是继续加流水，而是**给每个消费者在它自己输入端加一组捕获寄存器**——
+一个网络只驱动一组寄存器，布线自然散开。结果 156 → 1 个端点，而 LUT 反而少了 142 个
+（综合器做了寄存器共享）。
 
-## 烧写
+剩余那 1 个端点是 **10 皮秒**，在 `motion_detect` 的腐蚀加法链上；再拆要改块配对逻辑
+（偶/奇拍配对），收益与风险不成比例，**主动停手**并如实记录。
 
-JTAG 在线配置（掉电失效）：
+## 烧写（开发阶段，掉电失效）
 
 ```powershell
-# 在 td_project 目录下执行
-F:\al\bin\bw_commands_prompt.exe bw_program.tcl
+F:\al\bin\bw_commands_prompt.exe bw_program.tcl     # -mode jtag
 ```
-
-或 TD → BitWriter → 选上面的 `.bit` → `-mode jtag -spd 7`。
-
-> ⚠️ **SPI-Flash 固化尚未完成**（赛题硬性要求"上电即可运行"）。步骤见仓库外的
-> `提交材料/06_P0-SPI固化步骤.md`。
 
 线缆连不上时先跑：`powershell -File .\tools\check_jtag_cable.ps1`

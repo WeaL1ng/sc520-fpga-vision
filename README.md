@@ -37,8 +37,8 @@
 | L4 | 上板目视 | ✅ 功能正常（SC520CS 采集、检测、OSD、AE 均工作） |
 
 > ⚠️ **这是验证版，不是交付版。** SC520CS 的 720p60 把 MIPI 链路跑在 828 Mbps/Lane，字节时钟
-> 103.5 MHz（SC500 是 60 MHz）。本设计 MIPI 域实测 **Fmax 84.175 MHz**，全局 **SWNS −2.220 ns**、
-> **156 个违例端点**，最差路径集中在 `u_awb → u_target_detect_96` / `u_awb → u_luma_stats`。
+> 103.5 MHz（SC500 是 60 MHz）。本设计 MIPI 域实测 **Fmax 103.413 MHz**，全局 **SWNS −0.010 ns**、
+> **仅 1 个违例端点**（Hold 余量 +0.020 ns），最差路径集中在 `u_awb → u_target_detect_96` / `u_awb → u_luma_stats`。
 > **板测功能正常**（画面、检测、OSD、AE 均工作），但时序不收敛，不能当交付版本。
 > 曾尝试把 ISP 时钟域迁到 66.67 MHz 以换取零违例（构建成功、SWNS +1.06 ns），**上板满屏花屏**，
 > 已回退 —— 详见 `bitstream/README.md` 的"版本演进"。
@@ -130,7 +130,7 @@ F:\al\bin\bw_commands_prompt.exe bw_program.tcl
 | ERAM | 55 / 108（50.93%） |
 | DSP | 8 / 40（20.00%） |
 | IO | 63 / 160（39.38%） |
-| 全局 SWNS | **−2.220 ns**（MIPI 域，156 个违例端点） |
+| 全局 SWNS | **−0.010 ns**（MIPI 域，仅 1 个违例端点） |
 
 ## 7. 设计要点与踩过的坑
 
